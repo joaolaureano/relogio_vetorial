@@ -5,7 +5,6 @@ import java.util.Calendar;
 
 import app.socket.multicast.MSocket;
 import app.socket.multicast.MSocket.MSocketPayload;
-import app.socket.unicast.USocket;
 
 public class Server {
     static MSocket multicastSocket;
@@ -15,18 +14,18 @@ public class Server {
     public static void main(String[] args) throws IOException {
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
+        String[] new_args = {"1234", "5", "5", "100", "200"};
+        int port = Integer.parseInt(new_args[0]);
 
-        int port = Integer.parseInt(args[0]);
+        double chance = Double.parseDouble(new_args[1]);
+        int events = Integer.parseInt(new_args[2]);
 
-        double chance = Double.parseDouble(args[1]);
-        int events = Integer.parseInt(args[2]);
-
-        int minDelay = Integer.parseInt(args[3]);
-        int maxDelay = Integer.parseInt(args[4]);
+        int minDelay = Integer.parseInt(new_args[3]);
+        int maxDelay = Integer.parseInt(new_args[4]);
 
         multicastSocket = new MSocket(multicastPort, multicastAddress);
-        System.out.println("STARTED");
-        unlock();
+        System.out.println("LOCKED...");
+        // unlock();
 
         new ServerEventSender(port, chance, events, minDelay, maxDelay).start();
     }
@@ -38,7 +37,7 @@ public class Server {
                 MSocketPayload socketPayload = multicastSocket.receivePacket();
                 String vars[] = socketPayload.getContent().split("\\s");
                 if (vars[0].equals("SETUP")) {
-                    System.out.println("UNLOCKED");
+                    System.out.println("UNLOCKED :)");
                     System.out.println(String.format("%d:%d:%d.%d", Calendar.getInstance().get(Calendar.HOUR_OF_DAY),
                             Calendar.getInstance().get(Calendar.MINUTE),
                             Calendar.getInstance().get(Calendar.SECOND),

@@ -1,17 +1,17 @@
 package app.server.queue;
 
-public class QueueManager implements IQueueManager {
+public class ClockManager implements IClockManager {
 
     int[] queue;
-    static QueueManager queueManager;
+    static ClockManager queueManager;
 
-    QueueManager(int queueSize) {
+    ClockManager(int queueSize) {
         queue = new int[queueSize];
     }
 
-    public static QueueManager getInstance(int queueSize) {
+    public static ClockManager getInstance(int queueSize) {
         if (queueManager == null) {
-            queueManager = new QueueManager(queueSize);
+            queueManager = new ClockManager(queueSize);
         }
         return queueManager;
     }

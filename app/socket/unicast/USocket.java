@@ -47,7 +47,7 @@ public class USocket {
         }
     }
 
-    public USocketPayload receivePacket() {
+    public USocketPayload receivePacket() throws Exception {
         try {
             byte[] buffer = new byte[KILOBYTE];
 
@@ -60,10 +60,8 @@ public class USocket {
             return new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(), content);
 
         } catch (IOException e) {
-
+            throw new Exception();
         }
-
-        return null;
     }
 
     public void close() {
