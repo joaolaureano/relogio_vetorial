@@ -9,32 +9,26 @@ import app.socket.unicast.USocket;
 
 public class Server {
     static MSocket multicastSocket;
-    static USocket unicastSocket;
-    static int port;
+    static int multicastPort;
     static String multicastAddress;
 
     public static void main(String[] args) throws IOException {
+        multicastAddress = "230.0.0.0"; // need to change to a config file =)
+        multicastPort = 5000;
 
-        port = Integer.parseInt(args[0]);
-        multicastAddress = args[1];
+        int port = Integer.parseInt(args[0]);
 
-        multicastSocket = new MSocket(port, multicastAddress);
+        double chance = Double.parseDouble(args[1]);
+        int events = Integer.parseInt(args[2]);
+
+        int minDelay = Integer.parseInt(args[3]);
+        int maxDelay = Integer.parseInt(args[4]);
+
+        multicastSocket = new MSocket(multicastPort, multicastAddress);
         System.out.println("STARTED");
         unlock();
-        while (true) {
-            try {
-                MSocketPayload socketPayload = multicastSocket.receivePacket();
-                String vars[] = socketPayload.getContent().split("\\s");
-                int port = socketPayload.getPort();
-                System.out.println(vars[0]);
-                System.out.println(port);
 
-                if (vars[0].equals("SETUP"))
-                    return;
-
-            } catch (Exception e) {
-            }
-        }
+        new ServerEventSender(port, chance, events, minDelay, maxDelay).start();
     }
 
     public static void unlock() {

@@ -11,12 +11,12 @@ public class ServerSender {
     static String multicastAddress;
 
     public static void main(String[] args) throws IOException {
-        
+
         port = Integer.parseInt(args[0]);
         multicastAddress = args[1];
 
         socket = new MSocket(port, multicastAddress);
-while(true)
-        socket.sendPacket("SETUP", InetAddress.getByName(multicastAddress), 5000);
+        while (true)
+            socket.sendPacket("SETUP", InetAddress.getByName(multicastAddress), 5000);
     }
 }

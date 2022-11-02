@@ -27,12 +27,10 @@ public class USocket {
     int TIMEOUT = 500;
     int KILOBYTE = 1024;
     DatagramSocket datagramSocket;
-    String multicastAddress;
 
-    public USocket(int port, String multicastAddress) {
+    public USocket(int port) {
         try {
             this.datagramSocket = new DatagramSocket(port);
-            this.multicastAddress = multicastAddress;
             datagramSocket.setSoTimeout(TIMEOUT);
         } catch (IOException e) {
             e.printStackTrace();
