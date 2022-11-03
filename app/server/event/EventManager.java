@@ -12,7 +12,7 @@ public class EventManager {
     private EventManager(EventManagerBuilder builder) {
         this.clock = builder.clock;
         this.clockPosition = builder.clockPosition;
-        
+        this.unicastSocket = builder.unicastSocket;   
     }
 
     public boolean local(){
