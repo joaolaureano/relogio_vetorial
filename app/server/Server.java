@@ -14,7 +14,7 @@ public class Server {
     public static void main(String[] args) throws IOException {
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
-        String[] new_args = {"1234", "5", "5", "100", "200"};
+        String[] new_args = { "1234", "50", "5", "100", "200" };
         int port = Integer.parseInt(new_args[0]);
 
         double chance = Double.parseDouble(new_args[1]);
@@ -27,7 +27,7 @@ public class Server {
         System.out.println("LOCKED...");
         // unlock();
 
-        new ServerEventSender(port, chance, events, minDelay, maxDelay).start();
+        new ServerEventSender(port, chance, events, minDelay, maxDelay, "1234").start();
     }
 
     public static void unlock() {

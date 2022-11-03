@@ -1,4 +1,4 @@
-all:		Server.class MSocket.class USocket.class ServerManager.class ClockManager.class IClockManager.class
+all:		Server.class MSocket.class USocket.class ServerManager.class ClockManager.class IClockManager.class Sleeper.class EventManager.class
 
 Server.class:	app/server/Server.java
 				@javac app/server/Server.java
@@ -12,11 +12,17 @@ MSocket.class:		app/socket/multicast/MSocket.java
 USocket.class:	app/socket/unicast/USocket.java
 				@javac app/socket/unicast/USocket.java
 
-ClockManager.class:	app/server/queue/ClockManager.java
-					@javac app/server/queue/ClockManager.java
+ClockManager.class:	app/server/clock/ClockManager.java
+					@javac app/server/clock/ClockManager.java
 
-IClockManager.class:	app/server/queue/IClockManager.java
-					@javac app/server/queue/IClockManager.java
+IClockManager.class:	app/server/clock/IClockManager.java
+						@javac app/server/clock/IClockManager.java
+
+Sleeper.class:	app/server/sleeper/Sleeper.java
+				@javac app/server/sleeper/Sleeper.java
+
+EventManager.class:	app/server/event/EventManager.java
+					@javac app/server/event/EventManager.java
 
 clean:
 				@rm -rf *.class *~

@@ -1,4 +1,6 @@
-package app.server.queue;
+package app.server.clock;
+
+import java.util.Arrays;
 
 public class ClockManager implements IClockManager {
 
@@ -29,5 +31,10 @@ public class ClockManager implements IClockManager {
                     queue[i] = toCompareQueue[i];
             }
         }
+    }
+
+    @Override
+    public String toString() {
+        return Arrays.toString(queue);
     }
 }

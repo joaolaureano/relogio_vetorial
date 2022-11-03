@@ -1,4 +1,4 @@
-package app.server.queue;
+package app.server.clock;
 
 public interface IClockManager {
     public void update(int queuePosition, int[] toCompareQueue);
