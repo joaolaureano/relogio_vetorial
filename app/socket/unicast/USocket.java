@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.logging.Logger;
 
 /**
  * This class is a custom SOCKET Implementation to ease the development
@@ -24,6 +25,8 @@ import java.net.InetAddress;
  * 
  */
 public class USocket {
+    static final Logger logger = Logger.getLogger(USocket.class.getName());
+
     int TIMEOUT = 1000;
     int KILOBYTE = 1024;
 
@@ -32,7 +35,10 @@ public class USocket {
     public USocket(int port) {
         try {
             this.datagramSocket = new DatagramSocket(port);
+            logger.info("Created a Unicast Socket.");
+            logger.info(String.format("Socket port is %d", port));
             datagramSocket.setSoTimeout(TIMEOUT);
+            logger.info(String.format("Unicast Socket timeout is %d milisseconds", TIMEOUT));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -42,6 +48,7 @@ public class USocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
+            logger.info(String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
             // this.close();
@@ -62,7 +69,13 @@ public class USocket {
 
             String content = new String(datagramPacket.getData(), 0, datagramPacket.getLength());
 
-            return new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(), content);
+            USocketPayload response = new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
+                    content);
+
+            logger.info(String.format("Received a package. \n Origin port is %d\nPackage content is %s",
+                    response.getPort(), response.getContent()));
+
+            return response;
 
         } catch (IOException e) {
             throw new Exception();
