@@ -1,11 +1,15 @@
 package app.socket.multicast;
 
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.BindException;
 import java.net.DatagramPacket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.net.SocketException;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
@@ -27,7 +31,16 @@ import java.util.logging.Logger;
  * 
  */
 public class MSocket {
-    static final Logger logger = Logger.getGlobal();
+    static final Logger logger = Logger.getLogger(MSocket.class.getName());
+    static {
+        try {
+            InputStream stream = MSocket.class.getClassLoader()
+                    .getResourceAsStream("app/logging.properties");
+            LogManager.getLogManager().readConfiguration(stream);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     int TIMEOUT = 500;
     int KILOBYTE = 1024;
@@ -37,14 +50,16 @@ public class MSocket {
     public MSocket(int port, String multicastAddress) {
         try {
             this.datagramSocket = new MulticastSocket(port);
-            logger.log(Level.INFO,"Created a Multicast Socket.");
-            logger.log(Level.INFO,String.format("Socket port is %d", port));
+            logger.log(Level.CONFIG, String.format("Socket port is %d", port));
             this.multicastAddress = multicastAddress;
             this.joinGroup(multicastAddress);
             datagramSocket.setSoTimeout(TIMEOUT);
-            logger.log(Level.INFO,String.format("Multicast Socket timeout is %d milisseconds", TIMEOUT));
+            logger.log(Level.CONFIG, String.format("Multicast Socket timeout is %d milisseconds", TIMEOUT));
+
+            logger.log(Level.INFO, "Created a Multicast Socket.");
+        } catch (BindException e) {
+            logger.log(Level.SEVERE, String.format("Port is already in use. Terminating execution"));
         } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
@@ -52,10 +67,10 @@ public class MSocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.log(Level.INFO,String.format("Sent a package. \nDestiny port is %d\nPackage content is %s", port, content));
+            logger.log(Level.FINE,
+                    String.format("Sent a package. \nDestiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
-            // this.close();
         }
     }
 
@@ -72,7 +87,7 @@ public class MSocket {
             MSocketPayload response = new MSocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
                     content);
 
-                    logger.log(Level.INFO,String.format("Received a package. \nOrigin port is %d\nPackage content is %s",
+            logger.log(Level.FINE, String.format("Received a package. \nOrigin port is %d\nPackage content is %s",
                     response.getPort(), response.getContent()));
 
             return response;
@@ -91,7 +106,7 @@ public class MSocket {
             if (Inet4Address.getByAddress(group.getAddress()).isMulticastAddress()) {
 
                 datagramSocket.joinGroup(group);
-                logger.log(Level.INFO,String.format("Joined Multicast group\nIP is %s.", multicastAddress));
+                logger.log(Level.CONFIG, String.format("Joined Multicast group\nIP is %s.", multicastAddress));
                 return true;
             }
             return false;

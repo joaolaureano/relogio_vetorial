@@ -1,27 +1,40 @@
 package app.server.event;
 
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import app.server.clock.ClockManager;
 import app.socket.unicast.USocket;
 
 public class EventManager {
-    static final Logger logger = Logger.getGlobal();
+    static final Logger logger = Logger.getLogger(EventManager.class.getName());
+    static {
+        try {
+            InputStream stream = EventManager.class.getClassLoader()
+                    .getResourceAsStream("app/logging.properties");
+            LogManager.getLogManager().readConfiguration(stream);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     ClockManager clock;
     int clockPosition;
     USocket unicastSocket;
     USocket ackSocket;
+    int processId;
 
     private EventManager(EventManagerBuilder builder) {
         this.clock = builder.clock;
         this.clockPosition = builder.clockPosition;
         this.unicastSocket = builder.unicastSocket;
         this.ackSocket = builder.ackSocket;
+        this.processId = builder.processId;
     }
 
     public boolean local() {
@@ -30,6 +43,7 @@ public class EventManager {
         logger.log(Level.FINE, String.format("New clock status is %s ",
                 this.clock.toString()));
 
+        logger.log(Level.ALL, String.format("%d %s L", processId, this.clock.toString()));
         return true;
     }
 
@@ -51,6 +65,8 @@ public class EventManager {
 
             logger.log(Level.FINE, String.format("New clock status is %s ",
                     this.clock.toString()));
+
+            logger.log(Level.INFO, String.format("%d %s S %d", processId, this.clock.toString(), port));
             return true;
         } catch (UnknownHostException e) {
             e.printStackTrace();
@@ -66,6 +82,9 @@ public class EventManager {
                         Arrays.toString(remoteClock), this.clock.toString()));
         this.clock.update(this.clockPosition, remoteClock);
         logger.log(Level.FINE, String.format("Successfull operation."));
+
+        logger.log(Level.INFO,
+                String.format("%d %s R %d $t", processId, this.clock.toString(), -1, Arrays.toString(remoteClock)));
         return true;
     }
 
@@ -79,6 +98,7 @@ public class EventManager {
 
         ClockManager clock;
         int clockPosition;
+        int processId;
         USocket unicastSocket;
         USocket ackSocket;
 
@@ -86,6 +106,13 @@ public class EventManager {
             logger.log(Level.FINE, String.format("Clock size setted.\nSize is %d ",
                     clockSize));
             this.clock = ClockManager.getInstance(clockSize);
+            return this;
+        }
+
+        public EventManagerBuilder setProcessId(int processId) {
+            logger.log(Level.FINE, String.format("Process ID setted.\nSize is %d ",
+                    processId));
+            this.processId = processId;
             return this;
         }
 

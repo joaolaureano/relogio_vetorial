@@ -1,16 +1,27 @@
 package app.server;
 
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import app.server.event.EventManager;
 import app.server.sleeper.Sleeper;
 
 public class ServerSender extends Thread {
-    static final Logger logger = Logger.getGlobal();
+    static final Logger logger = Logger.getLogger(ServerSender.class.getName());
+    static {
+        try {
+            InputStream stream = ServerSender.class.getClassLoader()
+                    .getResourceAsStream("app/logging.properties");
+            LogManager.getLogManager().readConfiguration(stream);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 
     protected EventManager eventManager;
     protected int minDelay, maxDelay;
@@ -51,36 +62,39 @@ public class ServerSender extends Thread {
 
         double nextChance = Math.random();
         boolean success = false;
-        logger.log(Level.INFO, String.format("Chance value calculated. Chance value is %f", nextChance));
+        logger.log(Level.FINE, String.format("Chance value calculated. Chance value is %f", nextChance));
 
         if (nextChance <= chance) {
-            logger.log(Level.INFO, String.format("Remote Event triggered."));
+            logger.log(Level.FINE, String.format("Remote Event triggered."));
             int port = this.serverList.get((new Random()).nextInt(this.serverList.size()));
 
-            logger.log(Level.INFO, String.format("Remote port is %d", port));
+            logger.log(Level.FINE, String.format("Remote port is %d", port));
             success = this.eventManager.remote(port);
 
         } else {
-            logger.log(Level.INFO, "Local Event triggered.");
+            logger.log(Level.FINE, "Local Event triggered.");
             success = this.eventManager.local();
 
         }
         if (success) {
-            logger.log(Level.INFO, String.format("Event decreased. Event number is %d", events));
+            logger.log(Level.FINER, String.format("Event decreased. Event number is %d", events));
             events--;
-            events++;
 
         }
-        // else {
-
-        // // System.exit(0);
-
-        // }
 
     }
 
     public static class ServerSenderBuilder {
-        static final Logger logger = Logger.getGlobal();
+        static final Logger logger = Logger.getLogger(ServerSenderBuilder.class.getName());
+        static {
+            try {
+                InputStream stream = ServerSenderBuilder.class.getClassLoader()
+                        .getResourceAsStream("app/logging.properties");
+                LogManager.getLogManager().readConfiguration(stream);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
 
         EventManager eventManager;
         int minDelay, maxDelay;
@@ -90,42 +104,42 @@ public class ServerSender extends Thread {
 
         public ServerSenderBuilder setEventManager(EventManager eManager) {
             this.eventManager = eManager;
-            logger.log(Level.FINE, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
+            logger.log(Level.CONFIG, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
                     eventManager.toString()));
             return this;
         }
 
         public ServerSenderBuilder setMinDelay(int minDelay) {
             this.minDelay = minDelay;
-            logger.log(Level.FINE, String.format("Minimum Delay value is %d.",
+            logger.log(Level.CONFIG, String.format("Minimum Delay value is %d.",
                     minDelay));
             return this;
         }
 
         public ServerSenderBuilder setMaxDelay(int maxDelay) {
             this.maxDelay = maxDelay;
-            logger.log(Level.FINE, String.format("Maximum Delay value is %d.",
+            logger.log(Level.CONFIG, String.format("Maximum Delay value is %d.",
                     maxDelay));
             return this;
         }
 
         public ServerSenderBuilder setChance(double chance) {
             this.chance = chance / 100;
-            logger.log(Level.FINE, String.format("Remote chance value %f.",
+            logger.log(Level.CONFIG, String.format("Remote chance value %f.",
                     chance));
             return this;
         }
 
         public ServerSenderBuilder setEvents(int events) {
             this.events = events;
-            logger.log(Level.FINE, String.format("Number of Events is %d.",
+            logger.log(Level.CONFIG, String.format("Number of Events is %d.",
                     events));
             return this;
         }
 
         public ServerSenderBuilder setServerList(List<Integer> serverList) {
             this.serverList = serverList;
-            logger.log(Level.FINE, String.format("Server List is %s.",
+            logger.log(Level.CONFIG, String.format("Server List is %s.",
                     Arrays.toString(serverList.toArray())));
 
             return this;

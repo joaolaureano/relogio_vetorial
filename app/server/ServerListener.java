@@ -1,8 +1,10 @@
 package app.server;
 
+import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.logging.Level;
+import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import app.socket.unicast.USocket;
@@ -11,8 +13,16 @@ import app.server.clock.ClockManager;
 import app.server.event.EventManager;
 
 public class ServerListener extends Thread {
-    static final Logger logger = Logger.getGlobal();
-
+    static final Logger logger = Logger.getLogger(ServerListener.class.getName());
+    static {
+        try {
+            InputStream stream = ServerListener.class.getClassLoader()
+                    .getResourceAsStream("app/logging.properties");
+            LogManager.getLogManager().readConfiguration(stream);
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
     USocket unicastSocket;
     EventManager eventManager;
 
@@ -31,29 +41,29 @@ public class ServerListener extends Thread {
                 USocketPayload socketPayload = unicastSocket.receivePacket();
                 int port = socketPayload.getPort();
                 String vars = socketPayload.getContent();
-                logger.log(Level.INFO,
+                logger.log(Level.FINE,
                         String.format(
                                 "Received an package.\nContent is %s\nPort is %d",
                                 socketPayload.getContent(),
                                 port));
 
                 if (vars.startsWith("EVENT")) {
-                    logger.log(Level.INFO, "Received an EVENT package");
+                    logger.log(Level.FINE, "Received an EVENT package");
 
                     int[] clock = ClockManager.deserialize(vars.split("\\s-\\s")[1]);
-                    
+
                     this.eventManager.receive(clock);
-                    logger.log(Level.FINE, String.format("Origin Clock status is %s ",
+                    logger.log(Level.FINER, String.format("Origin Clock status is %s ",
                             Arrays.toString(clock)));
 
                     String ackMessage = "ACK";
                     unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"), port);
-                    logger.log(Level.INFO, String.format("Sent ACK to port %d", port));
+                    logger.log(Level.FINE, String.format("Sent ACK to port %d", port));
 
                 } else if (vars.startsWith("ACK")) {
-                    logger.log(Level.INFO, String.format("Received an ACK package from %d", port));
+                    logger.log(Level.FINE, String.format("Received an ACK package from %d", port));
 
-                    logger.log(Level.INFO, String.format("Moving ACK to internal socket.\nInternal Port is %d",
+                    logger.log(Level.FINER, String.format("Moving ACK to internal socket.\nInternal Port is %d",
                             this.unicastSocket.getLocalPort() + 1));
                     String ackMessage = "ACK";
                     unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"),
@@ -67,21 +77,30 @@ public class ServerListener extends Thread {
     }
 
     public static class ServerListenerBuilder {
-        static final Logger logger = Logger.getGlobal(); 
+        static final Logger logger = Logger.getLogger(ServerListenerBuilder.class.getName());
+        static {
+            try {
+                InputStream stream = ServerListenerBuilder.class.getClassLoader()
+                        .getResourceAsStream("app/logging.properties");
+                LogManager.getLogManager().readConfiguration(stream);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
 
         USocket unicastSocket;
         EventManager eventManager;
 
         public ServerListenerBuilder setUnicastSocket(USocket unicastSocket) {
             this.unicastSocket = unicastSocket;
-            logger.log(Level.FINE, String.format("Unicast Socket added to build ServerListener.\nPort is %d ",
+            logger.log(Level.CONFIG, String.format("Unicast Socket added to build ServerListener.\nPort is %d ",
                     unicastSocket.getLocalPort()));
             return this;
         }
 
         public ServerListenerBuilder setEventManager(EventManager eventManager) {
             this.eventManager = eventManager;
-            logger.log(Level.FINE, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
+            logger.log(Level.CONFIG, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
                     eventManager.toString()));
             return this;
         }
