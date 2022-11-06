@@ -24,7 +24,7 @@ public class ClockManager implements IClockManager {
     static ClockManager clockManager;
 
     ClockManager(int clockSize) {
-        logger.log(Level.INFO,String.format("New Clock created. Clock size is %d", clockSize));
+        logger.log(Level.CONFIG,String.format("New Clock created. Clock size is %d", clockSize));
         clock = new int[clockSize];
     }
 
@@ -40,7 +40,7 @@ public class ClockManager implements IClockManager {
         synchronized (clock) {
             clock[queuePosition]++;
         }
-        logger.log(Level.FINE, String.format("Updated Clock is %s", Arrays.toString(clock)));
+        logger.log(Level.FINER, String.format("Updated Clock is %s", Arrays.toString(clock)));
     }
 
     public void update(int queuePosition, int[] toCompareQueue) {

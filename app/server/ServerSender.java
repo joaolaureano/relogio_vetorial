@@ -1,6 +1,7 @@
 package app.server;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -28,6 +29,7 @@ public class ServerSender extends Thread {
     protected double chance;
     protected int events;
     protected List<Integer> serverList;
+    protected List<Integer> idList;
 
     ServerSender(ServerSenderBuilder builder) {
         this.chance = builder.chance;
@@ -36,6 +38,7 @@ public class ServerSender extends Thread {
         this.maxDelay = builder.maxDelay;
         this.serverList = builder.serverList;
         this.eventManager = builder.eventManager;
+        this.idList = builder.idList;
     }
 
     public void run() {
@@ -43,43 +46,54 @@ public class ServerSender extends Thread {
         while (true) {
             try {
                 Sleeper.performSleep(minDelay, maxDelay);
-                nextEvent();
+                boolean eventResponse = nextEvent();
                 if (events == 0) {
-                    logger.log(Level.INFO, String.format("Number of Events is 0. Ending process."));
+                    logger.log(Level.INFO, String.format("Number of Events is 0."));
                     logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
                     logger.log(Level.INFO, String.format("Ending process..."));
+                    System.exit(0);
                     return;
+                }
+                if (!eventResponse) {
+                    logger.log(Level.INFO, String.format("Time-out event."));
+                    logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
+                    logger.log(Level.INFO, String.format("Ending process..."));
+                    System.exit(0);
                 }
             } catch (Exception e) {
 
-                System.out.print(".");
+                // System.out.print(".");
 
             }
         }
     }
 
-    public void nextEvent() {
+    public boolean nextEvent() {
 
         double nextChance = Math.random();
         boolean success = false;
-        logger.log(Level.FINE, String.format("Chance value calculated. Chance value is %f", nextChance));
+        logger.log(Level.FINEST, String.format("Chance value calculated. Chance value is %f", nextChance));
 
         if (nextChance <= chance) {
-            logger.log(Level.FINE, String.format("Remote Event triggered."));
-            int port = this.serverList.get((new Random()).nextInt(this.serverList.size()));
-
-            logger.log(Level.FINE, String.format("Remote port is %d", port));
-            success = this.eventManager.remote(port);
+            logger.log(Level.FINEST, String.format("Remote Event triggered."));
+            int randomNum = (new Random()).nextInt(this.serverList.size());
+            int port = this.serverList.get(randomNum);
+            int id = this.idList.get(randomNum);
+            // int id = port;
+            logger.log(Level.FINEST, String.format("Remote port is %d\nRemote ID is %d", port, id));
+            success = this.eventManager.remote(port, id);
 
         } else {
-            logger.log(Level.FINE, "Local Event triggered.");
+            logger.log(Level.FINEST, "Local Event triggered.");
             success = this.eventManager.local();
 
         }
         if (success) {
-            logger.log(Level.FINER, String.format("Event decreased. Event number is %d", events));
+            logger.log(Level.FINEST, String.format("Event decreased. Event number is %d", events));
             events--;
-
+            return true;
+        } else {
+            return false;
         }
 
     }
@@ -101,6 +115,7 @@ public class ServerSender extends Thread {
         double chance;
         int events;
         List<Integer> serverList;
+        List<Integer> idList;
 
         public ServerSenderBuilder setEventManager(EventManager eManager) {
             this.eventManager = eManager;
@@ -141,6 +156,14 @@ public class ServerSender extends Thread {
             this.serverList = serverList;
             logger.log(Level.CONFIG, String.format("Server List is %s.",
                     Arrays.toString(serverList.toArray())));
+
+            return this;
+        }
+
+        public ServerSenderBuilder setIdList(List<Integer> idList) {
+            this.idList = idList;
+            logger.log(Level.CONFIG, String.format("ID List is %s.",
+                    Arrays.toString(idList.toArray())));
 
             return this;
         }

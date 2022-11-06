@@ -20,9 +20,9 @@ public class Sleeper {
       }
 
     public static void performSleep(int minDelay, int maxDelay) throws InterruptedException {
-        logger.log(Level.FINE, String.format("Min delay is %d. Max delay is %d.", minDelay, maxDelay));
+        logger.log(Level.FINER, String.format("Min delay is %d. Max delay is %d.", minDelay, maxDelay));
         int delay = new Random().nextInt(maxDelay + 1 - minDelay) + minDelay;
-        logger.info(String.format("Thread sleeping for %d seconds", delay));
+        logger.log(Level.FINER,String.format("Thread sleeping for %d seconds", delay));
         Thread.sleep(delay);
     }
 }

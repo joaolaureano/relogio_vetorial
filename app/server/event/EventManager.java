@@ -38,45 +38,45 @@ public class EventManager {
     }
 
     public boolean local() {
-        logger.log(Level.FINE, String.format("Local event triggered"));
+        logger.log(Level.FINER, String.format("Local event triggered"));
         this.clock.update(this.clockPosition);
-        logger.log(Level.FINE, String.format("New clock status is %s ",
+        logger.log(Level.FINEST, String.format("New clock status is %s ",
                 this.clock.toString()));
 
-        logger.log(Level.ALL, String.format("%d %s L", processId, this.clock.toString()));
+        logger.log(Level.INFO, String.format("%d %s L", processId, this.clock.toString()));
         return true;
     }
 
-    public boolean remote(int port) {
-        logger.log(Level.FINE, String.format("Remote event triggered"));
+    public boolean remote(int port, int id) {
+        logger.log(Level.FINER, String.format("Remote event triggered"));
         try {
-            logger.log(Level.FINE, String.format("Triggering Local event..."));
+            logger.log(Level.FINER, String.format("Triggering Local event..."));
             this.local();
 
             String array = this.clock.serialize();
 
-            String content = "EVENT - " + array;
+            String content = String.format("EVENT - %d - %s", processId, array);
 
-            logger.log(Level.FINE, String.format("Sending remote package.\nContent is %s\nPort is %d", content, port));
+            logger.log(Level.FINEST,
+                    String.format("Sending remote package.\nContent is %s\nPort is %d.\nId is %d", content, port, id));
 
             unicastSocket.sendPacket(content, InetAddress.getByName("localhost"), port);
 
-            unicastSocket.receivePacket();
-
-            logger.log(Level.FINE, String.format("New clock status is %s ",
+            logger.log(Level.FINEST, String.format("New clock status is %s ",
                     this.clock.toString()));
 
-            logger.log(Level.INFO, String.format("%d %s S %d", processId, this.clock.toString(), port));
+            logger.log(Level.INFO, String.format("%d %s S %d", processId, this.clock.toString(), id));
+            ackSocket.receivePacket();
             return true;
         } catch (UnknownHostException e) {
             e.printStackTrace();
         } catch (Exception e) {
-            logger.warning(String.format("Operation time-out."));
+            logger.log(Level.WARNING, String.format("Remote operation timed-out."));
         }
         return false;
     }
 
-    public boolean receive(int[] remoteClock) {
+    public boolean receive(int[] remoteClock, int idSender) {
         logger.log(Level.FINE,
                 String.format("Updating local clock with remote clock.\nRemote clock is %s\nLocal clock is %s",
                         Arrays.toString(remoteClock), this.clock.toString()));
@@ -84,7 +84,8 @@ public class EventManager {
         logger.log(Level.FINE, String.format("Successfull operation."));
 
         logger.log(Level.INFO,
-                String.format("%d %s R %d $t", processId, this.clock.toString(), -1, Arrays.toString(remoteClock)));
+                String.format("%d %s R %d %s", processId, this.clock.toString(), idSender,
+                        Arrays.toString(remoteClock)));
         return true;
     }
 

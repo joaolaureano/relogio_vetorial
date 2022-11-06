@@ -56,9 +56,10 @@ public class MSocket {
             datagramSocket.setSoTimeout(TIMEOUT);
             logger.log(Level.CONFIG, String.format("Multicast Socket timeout is %d milisseconds", TIMEOUT));
 
-            logger.log(Level.INFO, "Created a Multicast Socket.");
+            logger.log(Level.CONFIG, "Created a Multicast Socket.");
         } catch (BindException e) {
             logger.log(Level.SEVERE, String.format("Port is already in use. Terminating execution"));
+            System.exit(0);
         } catch (IOException e) {
         }
     }
@@ -67,7 +68,7 @@ public class MSocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.log(Level.FINE,
+            logger.log(Level.FINEST,
                     String.format("Sent a package. \nDestiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {

@@ -31,12 +31,12 @@ public class Server {
         }
     }
 
-    public static void main(String[] _args) throws IOException {
+    public static void main(String[] args_) throws IOException {
 
         logger.log(Level.INFO, "Initializing server...");
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
-        String[] args = { "1", "1", "5001", "25", "100", "100", "200", "1235" };
+        String[] args = { "1", "1", "5001", "100", "100", "1000", "2000", "1235" , "0" };
 
         int id = Integer.parseInt(args[0]);
         logger.log(Level.CONFIG, String.format("Id is %d", id));
@@ -60,7 +60,13 @@ public class Server {
         List<Integer> serverList;
         serverList = new ArrayList<Integer>();
         Stream.of(args[7].split(",")).map(Integer::valueOf).forEach(serverList::add);
-        logger.log(Level.CONFIG, String.format("Process Neighbors are %s", Arrays.toString(serverList.toArray())));
+        logger.log(Level.CONFIG,
+                String.format("Process Neighbors ports are %s", Arrays.toString(serverList.toArray())));
+
+        List<Integer> idList;
+        idList = new ArrayList<Integer>();
+        Stream.of(args[8].split(",")).map(Integer::valueOf).forEach(idList::add);
+        logger.log(Level.CONFIG, String.format("Process Neighbors ID's are %s", Arrays.toString(idList.toArray())));
 
         multicastSocket = new MSocket(multicastPort, multicastAddress);
 
@@ -95,6 +101,7 @@ public class Server {
                 .setMinDelay(minDelay)
                 .setMaxDelay(maxDelay)
                 .setServerList(serverList)
+                .setIdList(idList)
                 .build())
                 .start();
 

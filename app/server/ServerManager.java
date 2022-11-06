@@ -31,7 +31,7 @@ public class ServerManager {
         multicastAddress = args[0];
         port = Integer.parseInt(args[1]);
         socket = new MSocket(port, multicastAddress);
-        logger.log(Level.FINE,
+        logger.log(Level.FINER,
                 String.format("Server manager info.\nMulticast Address is %s\nPort is %d",
                         multicastAddress, port));
 

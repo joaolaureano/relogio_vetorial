@@ -60,9 +60,10 @@ public class USocket {
             logger.log(Level.CONFIG, String.format("Socket port is %d", port));
             datagramSocket.setSoTimeout(TIMEOUT);
             logger.log(Level.CONFIG, String.format("Unicast Socket timeout is %d milisseconds", TIMEOUT));
-            logger.log(Level.INFO, "Created a Unicast Socket.");
+            logger.log(Level.CONFIG, "Created a Unicast Socket.");
         } catch (BindException e) {
             logger.log(Level.SEVERE, String.format("Port is already in use. Terminating execution"));
+            System.exit(0);
         } catch (IOException e) {
         }
     }
@@ -71,7 +72,7 @@ public class USocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.log(Level.FINE,
+            logger.log(Level.FINEST,
                     String.format("Sent a package. \nDestiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
@@ -96,7 +97,7 @@ public class USocket {
             USocketPayload response = new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
                     content);
 
-            logger.log(Level.FINE, String.format("Received a package. \nOrigin port is %d\nPackage content is %s",
+            logger.log(Level.FINEST, String.format("Received a package. \nOrigin port is %d\nPackage content is %s",
                     response.getPort(), response.getContent()));
 
             return response;
