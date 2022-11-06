@@ -31,18 +31,17 @@ public class Server {
         }
     }
 
-    public static void main(String[] args_) throws IOException {
+    public static void main(String[] args) throws IOException {
 
         logger.log(Level.INFO, "Initializing server...");
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
-        String[] args = { "1", "1", "5001", "100", "100", "1000", "2000", "1235" , "0" };
-
+        
         int id = Integer.parseInt(args[0]);
-        logger.log(Level.CONFIG, String.format("Id is %d", id));
+        logger.log(Level.INFO, String.format("Id is %d", id));
 
         int position = Integer.parseInt(args[1]);
-        logger.log(Level.CONFIG, String.format("Position is %d", position));
+        logger.log(Level.INFO, String.format("Clock Position is %d", position));
 
         int port = Integer.parseInt(args[2]);
         logger.log(Level.CONFIG, String.format("Server port is %d", port));
@@ -123,4 +122,69 @@ public class Server {
         }
     }
 
+    public static class ServerBuilder {
+        String id;
+        String port;
+        String position;
+        String chance;
+        String events;
+        String minDelay;
+        String maxDelay;
+
+        String serverList;
+        String idList;
+
+        public ServerBuilder setId(String id) {
+            this.id = id;
+            return this;
+        }
+
+        public ServerBuilder setServerList(String serverList) {
+            this.serverList = serverList;
+            return this;
+        }
+
+        public ServerBuilder setIdList(String idList) {
+            this.idList = idList;
+            return this;
+        }
+
+
+        public ServerBuilder setPosition(String position) {
+            this.position = position;
+            return this;
+        }
+
+        public ServerBuilder setPort(String port) {
+            this.port = port;
+            return this;
+        }
+
+        public ServerBuilder setChance(String chance) {
+            this.chance = chance;
+            return this;
+        }
+
+        public ServerBuilder setEvents(String events) {
+            this.events = events;
+            return this;
+        }
+
+        public ServerBuilder setMinDelay(String minDelay) {
+            this.minDelay = minDelay;
+            return this;
+        }
+
+        public ServerBuilder setMaxDelay(String maxDelay) {
+            this.maxDelay = maxDelay;
+            return this;
+        }
+
+        public void build() throws IOException {
+            String[] arguments = { this.id, this.position, this.port, this.chance, this.events, this.minDelay,
+                    this.maxDelay, this.serverList, this.idList };
+            Server.main(arguments);
+        }
+
+    }
 }

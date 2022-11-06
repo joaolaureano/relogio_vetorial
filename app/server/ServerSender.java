@@ -1,7 +1,6 @@
 package app.server;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -79,7 +78,6 @@ public class ServerSender extends Thread {
             int randomNum = (new Random()).nextInt(this.serverList.size());
             int port = this.serverList.get(randomNum);
             int id = this.idList.get(randomNum);
-            // int id = port;
             logger.log(Level.FINEST, String.format("Remote port is %d\nRemote ID is %d", port, id));
             success = this.eventManager.remote(port, id);
 

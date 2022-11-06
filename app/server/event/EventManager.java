@@ -51,7 +51,8 @@ public class EventManager {
         logger.log(Level.FINER, String.format("Remote event triggered"));
         try {
             logger.log(Level.FINER, String.format("Triggering Local event..."));
-            this.local();
+            
+            this.clock.update(this.clockPosition);
 
             String array = this.clock.serialize();
 

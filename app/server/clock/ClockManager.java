@@ -50,7 +50,6 @@ public class ClockManager implements IClockManager {
             for (int i = 0; i < clock.length; i++)
                 clock[i] = Math.max(clock[i], toCompareQueue[i]);
         }
-        logger.log(Level.FINE, String.format("Triggered Local update."));
         this.update(queuePosition);
         logger.log(Level.FINER, String.format("Updated Clock is %s", Arrays.toString(clock)));
     }
