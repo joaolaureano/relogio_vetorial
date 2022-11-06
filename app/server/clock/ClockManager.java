@@ -1,6 +1,7 @@
 package app.server.clock;
 
 import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class ClockManager implements IClockManager {
 
@@ -26,15 +27,23 @@ public class ClockManager implements IClockManager {
 
     public void update(int queuePosition, int[] toCompareQueue) {
         synchronized (queue) {
-            for (int i = 0; i < queue.length; i++) {
-                if (queue[i] < toCompareQueue[i])
-                    queue[i] = toCompareQueue[i];
-            }
+            for (int i = 0; i < queue.length; i++)
+                queue[i] = Math.max(queue[i], toCompareQueue[i]);
         }
+        this.update(queuePosition);
     }
 
     @Override
     public String toString() {
         return Arrays.toString(queue);
     }
+
+    public String serialize() {
+        return Arrays.stream(queue).mapToObj(String::valueOf).collect(Collectors.joining(","));
+    }
+
+    public static int[] deserialize(String content) {
+        return Arrays.stream(content.split(",")).mapToInt(Integer::valueOf).toArray();
+    }
+
 }

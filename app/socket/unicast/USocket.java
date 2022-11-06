@@ -24,8 +24,9 @@ import java.net.InetAddress;
  * 
  */
 public class USocket {
-    int TIMEOUT = 500;
+    int TIMEOUT = 1000;
     int KILOBYTE = 1024;
+
     DatagramSocket datagramSocket;
 
     public USocket(int port) {
@@ -45,6 +46,10 @@ public class USocket {
         } catch (IOException e) {
             // this.close();
         }
+    }
+
+    public int getLocalPort() {
+        return this.datagramSocket.getLocalPort();
     }
 
     public USocketPayload receivePacket() throws Exception {

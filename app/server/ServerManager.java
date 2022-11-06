@@ -12,12 +12,10 @@ public class ServerManager {
 
     public static void main(String[] args) throws IOException {
 
-
         multicastAddress = args[0];
         port = Integer.parseInt(args[1]);
         socket = new MSocket(port, multicastAddress);
 
-        
         while (true)
             socket.sendPacket("SETUP", InetAddress.getByName(multicastAddress), 5000);
     }

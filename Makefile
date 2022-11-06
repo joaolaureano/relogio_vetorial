@@ -1,4 +1,4 @@
-all:		Server.class MSocket.class USocket.class ServerManager.class ClockManager.class IClockManager.class Sleeper.class EventManager.class
+all:		Server.class MSocket.class USocket.class ServerManager.class ClockManager.class IClockManager.class Sleeper.class EventManager.class ServerListener.class
 
 Server.class:	app/server/Server.java
 				@javac app/server/Server.java
@@ -24,5 +24,7 @@ Sleeper.class:	app/server/sleeper/Sleeper.java
 EventManager.class:	app/server/event/EventManager.java
 					@javac app/server/event/EventManager.java
 
+ServerListener.class:	app/server/ServerListener.java
+						@javac app/server/ServerListener.java
 clean:
 				@rm -rf *.class *~
