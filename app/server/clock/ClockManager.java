@@ -7,13 +7,13 @@ import java.util.stream.Collectors;
 
 public class ClockManager implements IClockManager {
 
-    static final Logger logger = Logger.getLogger(ClockManager.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     int[] clock;
     static ClockManager clockManager;
 
     ClockManager(int clockSize) {
-        logger.log(Level.INFO,String.format("New Clock created. Clock size is %d", clock));
+        logger.log(Level.INFO,String.format("New Clock created. Clock size is %d", clockSize));
         clock = new int[clockSize];
     }
 
@@ -39,10 +39,9 @@ public class ClockManager implements IClockManager {
             for (int i = 0; i < clock.length; i++)
                 clock[i] = Math.max(clock[i], toCompareQueue[i]);
         }
-        logger.log(Level.FINE, String.format("Updated Clock is %s", Arrays.toString(clock)));
-
         logger.log(Level.FINE, String.format("Triggered Local update."));
         this.update(queuePosition);
+        logger.log(Level.FINE, String.format("Updated Clock is %s", Arrays.toString(clock)));
     }
 
     @Override

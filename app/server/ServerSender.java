@@ -10,7 +10,7 @@ import app.server.event.EventManager;
 import app.server.sleeper.Sleeper;
 
 public class ServerSender extends Thread {
-    static final Logger logger = Logger.getLogger(ServerListener.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     protected EventManager eventManager;
     protected int minDelay, maxDelay;
@@ -51,7 +51,7 @@ public class ServerSender extends Thread {
 
         double nextChance = Math.random();
         boolean success = false;
-        logger.log(Level.FINE, String.format("Chance value calculated. Chance value is %d", nextChance));
+        logger.log(Level.INFO, String.format("Chance value calculated. Chance value is %f", nextChance));
 
         if (nextChance <= chance) {
             logger.log(Level.INFO, String.format("Remote Event triggered."));
@@ -66,7 +66,7 @@ public class ServerSender extends Thread {
 
         }
         if (success) {
-            logger.log(Level.FINE, "Event decreased. Event number is %d", events);
+            logger.log(Level.INFO, String.format("Event decreased. Event number is %d", events));
             events--;
             events++;
 
@@ -80,7 +80,7 @@ public class ServerSender extends Thread {
     }
 
     public static class ServerSenderBuilder {
-        static final Logger logger = Logger.getLogger(ServerSenderBuilder.class.getName());
+        static final Logger logger = Logger.getGlobal();
 
         EventManager eventManager;
         int minDelay, maxDelay;

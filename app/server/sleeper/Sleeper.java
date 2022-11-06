@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 public class Sleeper {    
     
-    static final Logger logger = Logger.getLogger(Sleeper.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     public static void performSleep(int minDelay, int maxDelay) throws InterruptedException {
         logger.log(Level.FINE, String.format("Min delay is %d. Max delay is %d.", minDelay, maxDelay));

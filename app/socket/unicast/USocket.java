@@ -26,7 +26,7 @@ import java.util.logging.Logger;
  * 
  */
 public class USocket {
-    static final Logger logger = Logger.getLogger(USocket.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     int TIMEOUT = 1000;
     int KILOBYTE = 1024;
@@ -49,7 +49,7 @@ public class USocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.log(Level.INFO,String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
+            logger.log(Level.INFO,String.format("Sent a package. \nDestiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
             // this.close();
@@ -73,7 +73,7 @@ public class USocket {
             USocketPayload response = new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
                     content);
 
-            logger.log(Level.INFO,String.format("Received a package. \n Origin port is %d\nPackage content is %s",
+            logger.log(Level.INFO,String.format("Received a package. \nOrigin port is %d\nPackage content is %s",
                     response.getPort(), response.getContent()));
 
             return response;

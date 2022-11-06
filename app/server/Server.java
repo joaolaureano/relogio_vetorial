@@ -2,6 +2,7 @@ package app.server;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -18,9 +19,10 @@ public class Server {
     static MSocket multicastSocket;
     static int multicastPort;
     static String multicastAddress;
-    static final Logger logger = Logger.getLogger(Server.class.getName());
+    static final Logger logger = Logger.getGlobal(); 
 
     public static void main(String[] _args) throws IOException {
+        
         logger.log(Level.INFO, "Initializing server...");
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
@@ -36,7 +38,7 @@ public class Server {
         logger.log(Level.INFO, String.format("Server port is %d", port));
 
         double chance = Double.parseDouble(args[3]);
-        logger.log(Level.INFO, String.format("Chance for a remote event is %d", chance));
+        logger.log(Level.INFO, String.format("Chance for a remote event is %f", chance));
 
         int events = Integer.parseInt(args[4]);
         logger.log(Level.INFO, String.format("Amount of events to be fired is %d", events));
@@ -48,7 +50,7 @@ public class Server {
         List<Integer> serverList;
         serverList = new ArrayList<Integer>();
         Stream.of(args[7].split(",")).map(Integer::valueOf).forEach(serverList::add);
-        logger.log(Level.INFO, String.format("Process Neighbors are ", serverList));
+        logger.log(Level.INFO, String.format("Process Neighbors are %s", Arrays.toString(serverList.toArray())));
 
         multicastSocket = new MSocket(multicastPort, multicastAddress);
         logger.warning("Server is LOCKED...");
@@ -58,7 +60,8 @@ public class Server {
         EventManager clock = (new EventManagerBuilder()
                 .setClockPosition(position)
                 .setClockSize(serverList.size() + 1)
-                .setSocket(socketAck)
+                .setSocket(socket)
+                .setAckSocket(socketAck)
                 .build());
 
         (new ServerListenerBuilder()

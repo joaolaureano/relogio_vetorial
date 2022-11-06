@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 import app.socket.multicast.MSocket;
 
 public class ServerManager {
-    static final Logger logger = Logger.getLogger(ServerManager.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     static MSocket socket;
     static int port;
     static String multicastAddress;
 
     public static void main(String[] args) throws IOException {
-        int counter = 100;
+        int counter = 10;
         logger.log(Level.INFO, "Server manager starting");
         multicastAddress = args[0];
         port = Integer.parseInt(args[1]);

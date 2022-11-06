@@ -10,16 +10,18 @@ import app.server.clock.ClockManager;
 import app.socket.unicast.USocket;
 
 public class EventManager {
-    static final Logger logger = Logger.getLogger(EventManager.class.getName());
+    static final Logger logger = Logger.getGlobal();
 
     ClockManager clock;
     int clockPosition;
     USocket unicastSocket;
+    USocket ackSocket;
 
     private EventManager(EventManagerBuilder builder) {
         this.clock = builder.clock;
         this.clockPosition = builder.clockPosition;
         this.unicastSocket = builder.unicastSocket;
+        this.ackSocket = builder.ackSocket;
     }
 
     public boolean local() {
@@ -73,11 +75,12 @@ public class EventManager {
     }
 
     public static class EventManagerBuilder {
-        static final Logger logger = Logger.getLogger(EventManagerBuilder.class.getName());
+        static final Logger logger = Logger.getGlobal();
 
         ClockManager clock;
         int clockPosition;
         USocket unicastSocket;
+        USocket ackSocket;
 
         public EventManagerBuilder setClockSize(int clockSize) {
             logger.log(Level.FINE, String.format("Clock size setted.\nSize is %d ",
@@ -97,6 +100,13 @@ public class EventManager {
             logger.log(Level.FINE, String.format("Unicast Socket added to build ServerListener.\nPort is %d ",
                     socket.getLocalPort()));
             this.unicastSocket = socket;
+            return this;
+        }
+
+        public EventManagerBuilder setAckSocket(USocket socket) {
+            logger.log(Level.FINE, String.format("ACK Socket added to build ServerListener.\nPort is %d ",
+                    socket.getLocalPort()));
+            this.ackSocket = socket;
             return this;
         }
 
