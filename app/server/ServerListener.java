@@ -31,14 +31,14 @@ public class ServerListener extends Thread {
                 USocketPayload socketPayload = unicastSocket.receivePacket();
                 int port = socketPayload.getPort();
                 String vars = socketPayload.getContent();
-                logger.info(
+                logger.log(Level.INFO,
                         String.format(
                                 "Received an package.\nContent is %s\n Port is %d",
                                 socketPayload.getContent(),
                                 port));
 
                 if (vars.startsWith("EVENT")) {
-                    logger.info("Received an EVENT package");
+                    logger.log(Level.INFO, "Received an EVENT package");
 
                     int[] clock = ClockManager.deserialize(vars.split("\\s-\\s")[1]);
                     logger.log(Level.FINE, String.format("Origin Clock status is %s ",
@@ -46,12 +46,12 @@ public class ServerListener extends Thread {
 
                     String ackMessage = "ACK";
                     unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"), port);
-                    logger.info(String.format("Sent ACK to port %d", port));
+                    logger.log(Level.INFO, String.format("Sent ACK to port %d", port));
 
                 } else if (vars.startsWith("ACK")) {
-                    logger.info(String.format("Received an ACK package from %d", port));
+                    logger.log(Level.INFO, String.format("Received an ACK package from %d", port));
 
-                    logger.info(String.format("Moving ACK to internal socket.\n Internal Port is %d",
+                    logger.log(Level.INFO, String.format("Moving ACK to internal socket.\n Internal Port is %d",
                             this.unicastSocket.getLocalPort() + 1));
                     String ackMessage = "ACK";
                     unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"),

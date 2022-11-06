@@ -13,7 +13,7 @@ public class ClockManager implements IClockManager {
     static ClockManager clockManager;
 
     ClockManager(int clockSize) {
-        logger.info(String.format("New Clock created. Clock size is %d", clock));
+        logger.log(Level.INFO,String.format("New Clock created. Clock size is %d", clock));
         clock = new int[clockSize];
     }
 

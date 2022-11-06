@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -35,10 +36,10 @@ public class USocket {
     public USocket(int port) {
         try {
             this.datagramSocket = new DatagramSocket(port);
-            logger.info("Created a Unicast Socket.");
-            logger.info(String.format("Socket port is %d", port));
+            logger.log(Level.INFO,"Created a Unicast Socket.");
+            logger.log(Level.INFO,String.format("Socket port is %d", port));
             datagramSocket.setSoTimeout(TIMEOUT);
-            logger.info(String.format("Unicast Socket timeout is %d milisseconds", TIMEOUT));
+            logger.log(Level.INFO,String.format("Unicast Socket timeout is %d milisseconds", TIMEOUT));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -48,7 +49,7 @@ public class USocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.info(String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
+            logger.log(Level.INFO,String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
             // this.close();
@@ -72,7 +73,7 @@ public class USocket {
             USocketPayload response = new USocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
                     content);
 
-            logger.info(String.format("Received a package. \n Origin port is %d\nPackage content is %s",
+            logger.log(Level.INFO,String.format("Received a package. \n Origin port is %d\nPackage content is %s",
                     response.getPort(), response.getContent()));
 
             return response;

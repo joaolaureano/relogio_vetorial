@@ -5,6 +5,7 @@ import java.net.DatagramPacket;
 import java.net.Inet4Address;
 import java.net.InetAddress;
 import java.net.MulticastSocket;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -36,12 +37,12 @@ public class MSocket {
     public MSocket(int port, String multicastAddress) {
         try {
             this.datagramSocket = new MulticastSocket(port);
-            logger.info("Created a Multicast Socket.");
-            logger.info(String.format("Socket port is %d", port));
+            logger.log(Level.INFO,"Created a Multicast Socket.");
+            logger.log(Level.INFO,String.format("Socket port is %d", port));
             this.multicastAddress = multicastAddress;
             this.joinGroup(multicastAddress);
             datagramSocket.setSoTimeout(TIMEOUT);
-            logger.info(String.format("Multicast Socket timeout is %d milisseconds", TIMEOUT));
+            logger.log(Level.INFO,String.format("Multicast Socket timeout is %d milisseconds", TIMEOUT));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -51,7 +52,7 @@ public class MSocket {
         try {
             byte[] contentBytes = content.getBytes();
             DatagramPacket datagramPacket = new DatagramPacket(contentBytes, content.length(), addr, port);
-            logger.info(String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
+            logger.log(Level.INFO,String.format("Sent a package. \n Destiny port is %d\nPackage content is %s", port, content));
             datagramSocket.send(datagramPacket);
         } catch (IOException e) {
             // this.close();
@@ -71,7 +72,7 @@ public class MSocket {
             MSocketPayload response = new MSocketPayload(datagramPacket.getAddress(), datagramPacket.getPort(),
                     content);
 
-            logger.info(String.format("Received a package. \n Origin port is %d\nPackage content is %s",
+                    logger.log(Level.INFO,String.format("Received a package. \n Origin port is %d\nPackage content is %s",
                     response.getPort(), response.getContent()));
 
             return response;
@@ -90,7 +91,7 @@ public class MSocket {
             if (Inet4Address.getByAddress(group.getAddress()).isMulticastAddress()) {
 
                 datagramSocket.joinGroup(group);
-                logger.info(String.format("Joined Multicast group\nIP is %s.", multicastAddress));
+                logger.log(Level.INFO,String.format("Joined Multicast group\nIP is %s.", multicastAddress));
                 return true;
             }
             return false;
