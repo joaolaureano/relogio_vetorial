@@ -79,8 +79,7 @@ public class MSocket {
      * Sends a packet with String content to specific address and port
      * 
      * @param content the content to be sent
-     * @param addr    the Address to be sent. In this assignment, LOCALHOST is being
-     *                used
+     * @param addr    the Address to be sent.
      * @param port    the remote port to communicate with
      */
     public void sendPacket(String content, InetAddress addr, int port) {
