@@ -51,6 +51,11 @@ public class EventManager {
     private int processId;
 
     /**
+     * Maximum events occurence
+     */
+    private int events;
+
+    /**
      * Main builder for EventManager.
      * It is used by {@link EventManagerBuilder } builder only
      * 
@@ -62,6 +67,7 @@ public class EventManager {
         this.unicastSocket = builder.unicastSocket;
         this.ackSocket = builder.ackSocket;
         this.processId = builder.processId;
+        this.events = builder.events;
     }
 
     /**
@@ -128,15 +134,27 @@ public class EventManager {
      */
     public boolean receive(int[] remoteClock, int idSender) {
         logger.log(Level.FINE,
-                String.format("Updating local clock with remote clock.\nRemote clock is %s\nLocal clock is %s",
+                String.format("Updating local clock with remote clock.\tRemote clock is %s\tLocal clock is %s",
                         Arrays.toString(remoteClock), this.clock.toString()));
         this.clock.update(this.clockPosition, remoteClock);
-        logger.log(Level.FINE, String.format("Successfull operation."));
 
         logger.log(Level.INFO,
                 String.format("%d %s R %d %s", processId, this.clock.toString(), idSender,
                         Arrays.toString(remoteClock)));
         return true;
+    }
+
+    public boolean decreaseEvent() {
+        synchronized (this) {
+            if (events > 0) {
+                events--;
+                logger.log(Level.FINE, String.format("Decreased number of events.Current value is %d", events));
+                return true;
+            } else {
+                logger.log(Level.FINE, String.format("Number of events is 0"));
+                return false;
+            }
+        }
     }
 
     /**
@@ -156,6 +174,7 @@ public class EventManager {
         ClockManager clock;
         int clockPosition;
         int processId;
+        int events;
         USocket unicastSocket;
         USocket ackSocket;
 
@@ -170,6 +189,13 @@ public class EventManager {
             logger.log(Level.FINE, String.format("Process ID setted.\nSize is %d ",
                     processId));
             this.processId = processId;
+            return this;
+        }
+
+        public EventManagerBuilder setEvents(int events) {
+            logger.log(Level.FINE, String.format("Maximum events setted.\nValue is %d ",
+                    events));
+            this.events = events;
             return this;
         }
 

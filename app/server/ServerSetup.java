@@ -39,8 +39,9 @@ public class ServerSetup {
      *             args[1], must send the line number of config file to be
      *             instantiate the server
      * @throws IOException
+     * @throws InterruptedException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
         logger.log(Level.CONFIG, String.format("ServerSetup is up."));
 
         List<String> lineList = Files.readAllLines(Paths.get(args[0]));

@@ -78,8 +78,9 @@ public class Server {
      * 
      * @param args
      * @throws IOException
+     * @throws InterruptedException
      */
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, InterruptedException {
 
         logger.log(Level.INFO, "Initializing server...");
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
@@ -121,33 +122,40 @@ public class Server {
         USocket socketAck = new USocket(port + 1);
 
         logger.log(Level.CONFIG, "Initializing EventManager");
-        EventManager clock = (new EventManagerBuilder()
+        EventManager eventManager = (new EventManagerBuilder()
                 .setProcessId(id)
                 .setClockPosition(position)
+                .setEvents(events)
                 .setClockSize(serverList.size() + 1)
                 .setSocket(socket)
                 .setAckSocket(socketAck)
                 .build());
 
-        logger.log(Level.INFO, "Initializing ServerListener Thread");
-        (new ServerListenerBuilder()
-                .setEventManager(clock)
+        ServerListener listener = (new ServerListenerBuilder()
+                .setEventManager(eventManager)
                 .setUnicastSocket(socket)
-                .build())
-                .start();
+                .build());
 
-        logger.log(Level.INFO, "Initializing ServerSender Thread");
-        (new ServerSenderBuilder()
+        ServerSender sender = (new ServerSenderBuilder()
                 .setChance(chance)
-                .setEventManager(clock)
-                .setEvents(events)
+                .setEventManager(eventManager)
                 .setMinDelay(minDelay)
                 .setMaxDelay(maxDelay)
                 .setServerList(serverList)
                 .setIdList(idList)
-                .build())
-                .start();
+                .build());
 
+        logger.log(Level.INFO, "Initializing ServerListener Thread");
+        listener.start();
+        // listener.join();
+        logger.log(Level.INFO, "Initializing ServerSender Thread");
+        sender.start();
+        // sender.join();
+
+        // logger.log(Level.INFO, String.format("Number of Events is 0."));
+        // logger.log(Level.INFO, String.format("Final clock status is %s", eventManager.toString()));
+        // logger.log(Level.INFO, String.format("Ending process..."));
+        // System.exit(0);
     }
 
     /**
@@ -165,7 +173,7 @@ public class Server {
                 MSocketPayload socketPayload = multicastSocket.receivePacket();
                 String vars[] = socketPayload.getContent().split("\\s");
                 if (vars[0].equals("SETUP")) {
-                    logger.log(Level.INFO, "Server is waitForUnlockED");
+                    logger.log(Level.INFO, "Server is UNLOCKED");
                     return;
                 }
             } catch (Exception e) {
@@ -234,7 +242,7 @@ public class Server {
             return this;
         }
 
-        public void build() throws IOException {
+        public void build() throws IOException, InterruptedException {
             String[] arguments = { this.id, this.position, this.port, this.chance, this.events, this.minDelay,
                     this.maxDelay, this.serverList, this.idList };
             Server.main(arguments);

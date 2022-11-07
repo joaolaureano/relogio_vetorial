@@ -69,6 +69,7 @@ public class ServerListener extends Thread {
                 USocketPayload socketPayload = unicastSocket.receivePacket();
                 int port = socketPayload.getPort();
                 String vars = socketPayload.getContent();
+
                 // logger.log(Level.OFF,
                 // String.format(
                 // "Received an package.\nContent is %s\nPort is %d",
@@ -77,6 +78,13 @@ public class ServerListener extends Thread {
 
                 if (vars.startsWith("EVENT")) {
                     logger.log(Level.FINE, "Received an EVENT package");
+                    boolean isEventAvailable = this.eventManager.decreaseEvent();
+                    if (!isEventAvailable) {
+                        logger.log(Level.INFO, String.format("Number of Events is 0."));
+                        logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
+                        logger.log(Level.INFO, String.format("Ending process..."));
+                        System.exit(0);
+                    }
                     int idSender = Integer.parseInt(vars.split("\\s-\\s")[1]);
                     int[] clock = ClockManager.deserialize(vars.split("\\s-\\s")[2]);
 

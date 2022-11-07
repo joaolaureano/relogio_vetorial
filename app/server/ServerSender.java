@@ -45,10 +45,6 @@ public class ServerSender extends Thread {
      */
     protected double chance;
     /**
-     * Maximum number of events
-     */
-    protected int events;
-    /**
      * List of all neighbor servers port
      */
     protected List<Integer> serverList;
@@ -65,7 +61,6 @@ public class ServerSender extends Thread {
      */
     private ServerSender(ServerSenderBuilder builder) {
         this.chance = builder.chance;
-        this.events = builder.events;
         this.minDelay = builder.minDelay;
         this.maxDelay = builder.maxDelay;
         this.serverList = builder.serverList;
@@ -92,13 +87,6 @@ public class ServerSender extends Thread {
             try {
                 Sleeper.performSleep(minDelay, maxDelay);
                 boolean eventResponse = nextEvent();
-                if (events == 0) {
-                    logger.log(Level.INFO, String.format("Number of Events is 0."));
-                    logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
-                    logger.log(Level.INFO, String.format("Ending process..."));
-                    System.exit(0);
-                    return;
-                }
                 if (!eventResponse) {
                     logger.log(Level.INFO, String.format("Time-out event."));
                     logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
@@ -115,7 +103,8 @@ public class ServerSender extends Thread {
 
     /**
      * This is the main method to decide the remote or local event
-     * It will calculate a random number and compare with {@link ServerSender#chance} field.
+     * It will calculate a random number and compare with
+     * {@link ServerSender#chance} field.
      * In case it is smaller or equal, it will trigger a remote event. Otherwise,
      * trigger a local event.
      * 
@@ -127,8 +116,15 @@ public class ServerSender extends Thread {
         double nextChance = Math.random();
         boolean success = false;
         logger.log(Level.FINEST, String.format("Chance value calculated. Chance value is %f", nextChance));
-
+        boolean isEventAvailable = this.eventManager.decreaseEvent();
+        if (!isEventAvailable) {
+            logger.log(Level.INFO, String.format("Number of Events is 0."));
+            logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
+            logger.log(Level.INFO, String.format("Ending process..."));
+            System.exit(0);
+        }
         if (nextChance <= chance) {
+
             logger.log(Level.FINEST, String.format("Remote Event triggered."));
             int randomNum = (new Random()).nextInt(this.serverList.size());
             int port = this.serverList.get(randomNum);
@@ -141,13 +137,7 @@ public class ServerSender extends Thread {
             success = this.eventManager.local();
 
         }
-        if (success) {
-            logger.log(Level.FINEST, String.format("Event decreased. Event number is %d", events));
-            events--;
-            return true;
-        } else {
-            return false;
-        }
+        return success;
 
     }
 
@@ -186,10 +176,6 @@ public class ServerSender extends Thread {
          */
         private double chance;
         /**
-         * Maximum number of events
-         */
-        private int events;
-        /**
          * List of all neighbor servers port
          */
         private List<Integer> serverList;
@@ -223,13 +209,6 @@ public class ServerSender extends Thread {
             this.chance = chance / 100;
             logger.log(Level.CONFIG, String.format("Remote chance value %f.",
                     chance));
-            return this;
-        }
-
-        public ServerSenderBuilder setEvents(int events) {
-            this.events = events;
-            logger.log(Level.CONFIG, String.format("Number of Events is %d.",
-                    events));
             return this;
         }
 
