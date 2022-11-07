@@ -16,10 +16,14 @@ import app.socket.unicast.USocket;
 import app.server.event.EventManager.EventManagerBuilder;
 import java.util.logging.*;
 
+/**
+ * Main class used to instantiate {@link ServerListener} and
+ * {@link ServerSender} threads
+ */
 public class Server {
-    static MSocket multicastSocket;
-    static int multicastPort;
-    static String multicastAddress;
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(Server.class.getName());
     static {
         try {
@@ -30,13 +34,57 @@ public class Server {
             ex.printStackTrace();
         }
     }
+    /**
+     * Multicast Socket to join group
+     */
+    static MSocket multicastSocket;
+    /**
+     * Multicast port to bind socket
+     */
+    static int multicastPort;
+    /**
+     * Multicast address to bind socket
+     */
+    static String multicastAddress;
 
+    /**
+     * @param args
+     * @throws IOException
+     */
+    /**
+     * Main method for {@link Server}.
+     * This method will instantiate the {@link ServerListener} and
+     * {@link ServerSender} based in the args values. args must contains the
+     * following format
+     * args[0] is server id
+     * args[1] is server clock position (Used by {@link EventManager} clock, so it
+     * will knows the local position)
+     * args[2] is server port
+     * args[3] is Chance value
+     * args[4] is Events value
+     * args[5] is Minimum delay valye
+     * args[6] is Maximum delay value
+     * args[7] is List of neighbors port value
+     * args[8] is List of neighbors id values
+     * 
+     * 
+     * Flow is:
+     * It will capture all values sent throught args value.
+     * It will stay in LOCKED position, and wait for a Multicast packet so it can be
+     * unlocked.
+     * It will configure internal sockets
+     * It will finally instantiate {@link ServerListener} and {@link ServerSender}
+     * threads
+     * 
+     * @param args
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
 
         logger.log(Level.INFO, "Initializing server...");
         multicastAddress = "230.0.0.0"; // need to change to a config file =)
         multicastPort = 5000;
-        
+
         int id = Integer.parseInt(args[0]);
         logger.log(Level.INFO, String.format("Id is %d", id));
 
@@ -67,11 +115,7 @@ public class Server {
         Stream.of(args[8].split(",")).map(Integer::valueOf).forEach(idList::add);
         logger.log(Level.CONFIG, String.format("Process Neighbors ID's are %s", Arrays.toString(idList.toArray())));
 
-        multicastSocket = new MSocket(multicastPort, multicastAddress);
-
-        logger.log(Level.WARNING, "Server is LOCKED...");
-
-        unlock();
+        waitForUnlock();
 
         USocket socket = new USocket(port);
         USocket socketAck = new USocket(port + 1);
@@ -106,14 +150,22 @@ public class Server {
 
     }
 
-    public static void unlock() {
+    /**
+     * Method to listen Multicast socket until a "SETUP" package is sent.
+     * While "SETUP" package is not sent, it will timeout, and will kept the
+     * "LOCKED" status
+     */
+    public static void waitForUnlock() {
+        multicastSocket = new MSocket(multicastPort, multicastAddress);
+        logger.log(Level.WARNING, "Server is LOCKED...");
+
         while (true) {
             try {
 
                 MSocketPayload socketPayload = multicastSocket.receivePacket();
                 String vars[] = socketPayload.getContent().split("\\s");
                 if (vars[0].equals("SETUP")) {
-                    logger.log(Level.INFO, "Server is UNLOCKED");
+                    logger.log(Level.INFO, "Server is waitForUnlockED");
                     return;
                 }
             } catch (Exception e) {
@@ -122,17 +174,20 @@ public class Server {
         }
     }
 
+    /**
+     * Main {@link Server} builder
+     */
     public static class ServerBuilder {
-        String id;
-        String port;
-        String position;
-        String chance;
-        String events;
-        String minDelay;
-        String maxDelay;
+        private String id;
+        private String port;
+        private String position;
+        private String chance;
+        private String events;
+        private String minDelay;
+        private String maxDelay;
 
-        String serverList;
-        String idList;
+        private String serverList;
+        private String idList;
 
         public ServerBuilder setId(String id) {
             this.id = id;
@@ -148,7 +203,6 @@ public class Server {
             this.idList = idList;
             return this;
         }
-
 
         public ServerBuilder setPosition(String position) {
             this.position = position;

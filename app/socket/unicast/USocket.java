@@ -11,24 +11,12 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
- * This class is a custom SOCKET Implementation to ease the development
- * It contains the following variables/constant:
- * TIMEOUT, to define the timeout maximum time
- * KILOBYTE, to define the size of a byte
- * datagramSocket, to define a socket that will be used throught the whole
- * software
- * It also contains the following methods:
- * sendPacket -> It will send a packet, with a specific content, to some host at
- * some port
- * receivePacket -> It will lock the software to listen to a specific port until
- * some resourse is sent to this port
- * close -> It will close the socket
- * It also define a internal class SocketPayload.
- * This class is used to ease the echange of packets between host and peers
- * This class contains the address, the port and the content of the packet
- * 
+ * Represents a unicast socket to ease development
  */
 public class USocket {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(USocket.class.getName());
     static {
         try {
@@ -39,21 +27,29 @@ public class USocket {
             ex.printStackTrace();
         }
     }
-    static {
-        try {
-            InputStream stream = USocket.class.getClassLoader()
-                    .getResourceAsStream("app/logging.properties");
-            LogManager.getLogManager().readConfiguration(stream);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
+    /**
+     * Constant time out for listening operation
+     * Standard value is 1000
+     */
+    final int TIMEOUT = 1000;
+    /**
+     * Representation of Kilobyte in bits
+     * Used to ease packet manipulation
+     * Standard value is 1024
+     */
+    final int KILOBYTE = 1024;
 
-    int TIMEOUT = 1000;
-    int KILOBYTE = 1024;
-
+    /**
+     * The main socket to perform
+     */
     DatagramSocket datagramSocket;
 
+    /**
+     * Main constructor for UnicastSocket
+     * It creates a DatagramSocket with defined TIMEOUT
+     * 
+     * @param port
+     */
     public USocket(int port) {
         try {
             this.datagramSocket = new DatagramSocket(port);
@@ -68,6 +64,14 @@ public class USocket {
         }
     }
 
+    /**
+     * Sends a packet with String content to specific address and port
+     * 
+     * @param content the content to be sent
+     * @param addr    the Address to be sent. In this assignment, LOCALHOST is being
+     *                used
+     * @param port    the remote port to communicate with
+     */
     public void sendPacket(String content, InetAddress addr, int port) {
         try {
             byte[] contentBytes = content.getBytes();
@@ -80,10 +84,22 @@ public class USocket {
         }
     }
 
+    /**
+     * Returns the socket port
+     * 
+     * @return int
+     */
     public int getLocalPort() {
         return this.datagramSocket.getLocalPort();
     }
 
+    /**
+     * Receives a packet, using defined TIMEOUT.
+     * In case timeout is reached, throws an exception.
+     * 
+     * @return USocketPayload the captured packet sent by any remote host
+     * @throws Exception
+     */
     public USocketPayload receivePacket() throws Exception {
         try {
             byte[] buffer = new byte[KILOBYTE];
@@ -112,9 +128,22 @@ public class USocket {
 
     }
 
+    /**
+     * Represent the packet sent and received by the socket.
+     * Contains the address, port and the content
+     */
     public class USocketPayload {
+        /**
+         * The address that will receive/send the packet
+         */
         private InetAddress address;
+        /**
+         * The port that will receive/send the packet
+         */
         private int port;
+        /**
+         * The content sent/received in the packet
+         */
         private String content;
 
         protected USocketPayload(InetAddress address, int port, String content) {

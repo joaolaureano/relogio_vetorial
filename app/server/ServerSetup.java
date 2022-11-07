@@ -9,11 +9,17 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.LogManager;
 import java.util.logging.Logger;
-import java.util.stream.Stream;
 
 import app.server.Server.ServerBuilder;
 
+/**
+ * This class is used as a helper to instantiate all servers based in the config
+ * file
+ */
 public class ServerSetup {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(Server.class.getName());
     static {
         try {
@@ -25,12 +31,24 @@ public class ServerSetup {
         }
     }
 
+    /**
+     * Main method for setup
+     * 
+     * @param args This MUST contains the arguments to run properly. In position
+     *             args[0], must be sent name of the config text file. In position
+     *             args[1], must send the line number of config file to be
+     *             instantiate the server
+     * @throws IOException
+     */
     public static void main(String[] args) throws IOException {
         logger.log(Level.CONFIG, String.format("ServerSetup is up."));
 
         List<String> lineList = Files.readAllLines(Paths.get(args[0]));
         String[] configLine = lineList.get(Integer.parseInt(args[1])).split("\\s");
 
+        /*
+         * Below block will pass all the servers neighbors(ID-PORT) to communicate with
+         */
         List<String> idList = new ArrayList<>();
         List<String> portList = new ArrayList<>();
         for (String line : lineList) {

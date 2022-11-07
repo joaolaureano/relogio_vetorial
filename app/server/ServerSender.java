@@ -11,7 +11,13 @@ import java.util.logging.Logger;
 import app.server.event.EventManager;
 import app.server.sleeper.Sleeper;
 
+/**
+ * Main thread class to send the events to the neighbors servers.
+ */
 public class ServerSender extends Thread {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(ServerSender.class.getName());
     static {
         try {
@@ -22,15 +28,42 @@ public class ServerSender extends Thread {
             ex.printStackTrace();
         }
     }
-
+    /**
+     * Main {@link EventManager} EventManager shared along whole application
+     */
     protected EventManager eventManager;
-    protected int minDelay, maxDelay;
+    /**
+     * Minimum value for Thread sleep
+     */
+    protected int minDelay;
+    /**
+     * Maximum value for Thread sleep
+     */
+    protected int maxDelay;
+    /**
+     * Chance to trigger a remote event
+     */
     protected double chance;
+    /**
+     * Maximum number of events
+     */
     protected int events;
+    /**
+     * List of all neighbor servers port
+     */
     protected List<Integer> serverList;
+    /**
+     * List of all neighbor servers ID
+     */
     protected List<Integer> idList;
 
-    ServerSender(ServerSenderBuilder builder) {
+    /**
+     * Main builder for ServerSender.
+     * It is used by {@link ServerSenderBuilder} builder only
+     * 
+     * @param builder
+     */
+    private ServerSender(ServerSenderBuilder builder) {
         this.chance = builder.chance;
         this.events = builder.events;
         this.minDelay = builder.minDelay;
@@ -40,6 +73,19 @@ public class ServerSender extends Thread {
         this.idList = builder.idList;
     }
 
+    /**
+     * Main method for ServerSender thread
+     * 
+     * Execution flow is at is follow:
+     * It will run a while-true loop, and first operation is a sleep
+     * After sleep, it will decide whether a local or remote event will be triggered
+     * by EventManagers
+     * In case the number of events is 0, therefore no more events will need be
+     * triggered, and execution will be finalized.
+     * In case the event operation returns a false value, then it reached a timeout,
+     * therefore execution will be finalized.
+     * Loop will restart.
+     */
     public void run() {
 
         while (true) {
@@ -67,6 +113,15 @@ public class ServerSender extends Thread {
         }
     }
 
+    /**
+     * This is the main method to decide the remote or local event
+     * It will calculate a random number and compare with {@link ServerSender#chance} field.
+     * In case it is smaller or equal, it will trigger a remote event. Otherwise,
+     * trigger a local event.
+     * 
+     * @return boolean A value that represents whether the event was success or not.
+     *         Should only returns false in case of remote timeout.
+     */
     public boolean nextEvent() {
 
         double nextChance = Math.random();
@@ -96,7 +151,13 @@ public class ServerSender extends Thread {
 
     }
 
+    /**
+     * Builder for {@link ServerSender}
+     */
     public static class ServerSenderBuilder {
+        /**
+         * Main static logger for class
+         */
         static final Logger logger = Logger.getLogger(ServerSenderBuilder.class.getName());
         static {
             try {
@@ -108,12 +169,34 @@ public class ServerSender extends Thread {
             }
         }
 
-        EventManager eventManager;
-        int minDelay, maxDelay;
-        double chance;
-        int events;
-        List<Integer> serverList;
-        List<Integer> idList;
+        /**
+         * Main {@link EventManager} shared along whole application
+         */
+        private EventManager eventManager;
+        /**
+         * Minimum value for Thread sleep
+         */
+        private int minDelay;
+        /**
+         * Maximum value for Thread sleep
+         */
+        private int maxDelay;
+        /**
+         * Chance to trigger a remote event
+         */
+        private double chance;
+        /**
+         * Maximum number of events
+         */
+        private int events;
+        /**
+         * List of all neighbor servers port
+         */
+        private List<Integer> serverList;
+        /**
+         * List of all neighbor servers ID
+         */
+        private List<Integer> idList;
 
         public ServerSenderBuilder setEventManager(EventManager eManager) {
             this.eventManager = eManager;

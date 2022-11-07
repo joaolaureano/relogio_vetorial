@@ -13,24 +13,12 @@ import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 /**
- * This class is a custom SOCKET Implementation to ease the development
- * It contains the following variables/constant:
- * TIMEOUT, to define the timeout maximum time
- * KILOBYTE, to define the size of a byte
- * datagramSocket, to define a socket that will be used throught the whole
- * software
- * It also contains the following methods:
- * sendPacket -> It will send a packet, with a specific content, to some host at
- * some port
- * receivePacket -> It will lock the software to listen to a specific port until
- * some resourse is sent to this port
- * close -> It will close the socket
- * It also define a internal class SocketPayload.
- * This class is used to ease the echange of packets between host and peers
- * This class contains the address, the port and the content of the packet
- * 
+ * Represents a multicast socket to ease development
  */
 public class MSocket {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(MSocket.class.getName());
     static {
         try {
@@ -41,12 +29,35 @@ public class MSocket {
             ex.printStackTrace();
         }
     }
-
-    int TIMEOUT = 500;
-    int KILOBYTE = 1024;
+    /**
+     * Constant time out for listening operation
+     * Standard value is 1000
+     */
+    final int TIMEOUT = 1000;
+    /**
+     * Representation of Kilobyte in bits
+     * Used to ease packet manipulation
+     * Standard value is 1024
+     */
+    final int KILOBYTE = 1024;
+    /**
+     * The main socket to perform operation
+     */
     MulticastSocket datagramSocket;
+    /**
+     * The multicast address to connect with.
+     * In this assignment, all host will connect with only one address,
+     * therefore, make senses to use a simple String variable.
+     */
     String multicastAddress;
 
+    /**
+     * Main constructor for UnicastSocket
+     * It creates a DatagramSocket with defined TIMEOUT
+     * 
+     * @param port             port to bind with
+     * @param multicastAddress multicast address to connect with
+     */
     public MSocket(int port, String multicastAddress) {
         try {
             this.datagramSocket = new MulticastSocket(port);
@@ -64,6 +75,14 @@ public class MSocket {
         }
     }
 
+    /**
+     * Sends a packet with String content to specific address and port
+     * 
+     * @param content the content to be sent
+     * @param addr    the Address to be sent. In this assignment, LOCALHOST is being
+     *                used
+     * @param port    the remote port to communicate with
+     */
     public void sendPacket(String content, InetAddress addr, int port) {
         try {
             byte[] contentBytes = content.getBytes();
@@ -75,6 +94,13 @@ public class MSocket {
         }
     }
 
+    /**
+     * Receives a packet, using defined TIMEOUT.
+     * In case timeout is reached, throws an exception.
+     * 
+     * @return USocketPayload the captured packet sent by any remote host
+     * @throws Exception
+     */
     public MSocketPayload receivePacket() {
         try {
             byte[] buffer = new byte[KILOBYTE];
@@ -100,6 +126,12 @@ public class MSocket {
         return null;
     }
 
+    /**
+     * Will join socket to a multicastAddress
+     * 
+     * @param multicastAddress
+     * @return whether it was success or not
+     */
     public boolean joinGroup(String multicastAddress) {
         InetAddress group;
         try {
@@ -130,9 +162,23 @@ public class MSocket {
 
     }
 
+    /**
+     * Represent the packet sent and received by the socket.
+     * Contains the address, port and the content
+     */
     public class MSocketPayload {
+
+        /**
+         * The address that will receive/send the packet
+         */
         private InetAddress address;
+        /**
+         * The port that will receive/send the packet
+         */
         private int port;
+        /**
+         * The content sent/received in the packet
+         */
         private String content;
 
         protected MSocketPayload(InetAddress address, int port, String content) {

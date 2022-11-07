@@ -12,7 +12,13 @@ import app.socket.unicast.USocket.USocketPayload;
 import app.server.clock.ClockManager;
 import app.server.event.EventManager;
 
+/**
+ * Main thread class to listen the events from neighbors servers.
+ */
 public class ServerListener extends Thread {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(ServerListener.class.getName());
     static {
         try {
@@ -23,18 +29,40 @@ public class ServerListener extends Thread {
             ex.printStackTrace();
         }
     }
+    /**
+     * Main {@link USocket} unicast socket shared along whole application
+     */
     USocket unicastSocket;
+    /**
+     * Main {@link EventManager} EventManager shared along whole application
+     */
     EventManager eventManager;
 
-    public ServerListener(USocket unicastSocket) {
-        this.unicastSocket = unicastSocket;
-    }
-
+    /**
+     * Main builder for ServerListener.
+     * It is used by {@link ServerListenerBuilder } builder only
+     * 
+     * @param builder
+     */
     ServerListener(ServerListenerBuilder builder) {
         this.unicastSocket = builder.unicastSocket;
         this.eventManager = builder.eventManager;
     }
 
+    /**
+     * Main method for ServerListener thread
+     * 
+     * Execution flow is at is follow:
+     * It executes a while-true loop
+     * It will listen to any package that might be becoming, given Socket timeout.
+     * In case the number of events is 0, therefore no more events will need be
+     * triggered, and execution will be finalized.
+     * In case packet is EVENT type, it will trigger
+     * {@link EventManager#receive(int[], int)} to update clock.
+     * It will also send a ACK packet to origin host
+     * In case packet is ACK type, it will send the packet to internal
+     * {@link EventManager#clock}, in order to satisfy socket timeout
+     */
     public void run() {
         while (true) {
             try {
@@ -42,10 +70,10 @@ public class ServerListener extends Thread {
                 int port = socketPayload.getPort();
                 String vars = socketPayload.getContent();
                 // logger.log(Level.OFF,
-                //         String.format(
-                //                 "Received an package.\nContent is %s\nPort is %d",
-                //                 socketPayload.getContent(),
-                //                 port));
+                // String.format(
+                // "Received an package.\nContent is %s\nPort is %d",
+                // socketPayload.getContent(),
+                // port));
 
                 if (vars.startsWith("EVENT")) {
                     logger.log(Level.FINE, "Received an EVENT package");
@@ -76,6 +104,9 @@ public class ServerListener extends Thread {
         }
     }
 
+    /**
+     * Builder for {@link ServerListener}
+     */
     public static class ServerListenerBuilder {
         static final Logger logger = Logger.getLogger(ServerListenerBuilder.class.getName());
         static {

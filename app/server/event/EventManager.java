@@ -11,7 +11,13 @@ import java.util.logging.Logger;
 import app.server.clock.ClockManager;
 import app.socket.unicast.USocket;
 
+/**
+ * Main class for Events management
+ */
 public class EventManager {
+    /**
+     * Main static logger for class
+     */
     static final Logger logger = Logger.getLogger(EventManager.class.getName());
     static {
         try {
@@ -22,13 +28,34 @@ public class EventManager {
             ex.printStackTrace();
         }
     }
+    /**
+     * Main server vectorial clock
+     */
+    private ClockManager clock;
+    /**
+     * Value to identify the server position in vectorial clock
+     */
+    private int clockPosition;
+    /**
+     * Main {@link USocket} unicast socket shared along whole application
+     */
+    private USocket unicastSocket;
+    /**
+     * Additional {@link USocket} unicast socket to listen ACK packages.
+     * Used for remote procedures only.
+     */
+    private USocket ackSocket;
+    /**
+     * Server ID
+     */
+    private int processId;
 
-    ClockManager clock;
-    int clockPosition;
-    USocket unicastSocket;
-    USocket ackSocket;
-    int processId;
-
+    /**
+     * Main builder for EventManager.
+     * It is used by {@link EventManagerBuilder } builder only
+     * 
+     * @param builder
+     */
     private EventManager(EventManagerBuilder builder) {
         this.clock = builder.clock;
         this.clockPosition = builder.clockPosition;
@@ -37,6 +64,11 @@ public class EventManager {
         this.processId = builder.processId;
     }
 
+    /**
+     * Executes a local event in clock and returns true
+     * 
+     * @return boolean
+     */
     public boolean local() {
         logger.log(Level.FINER, String.format("Local event triggered"));
         this.clock.update(this.clockPosition);
@@ -47,11 +79,21 @@ public class EventManager {
         return true;
     }
 
+    /**
+     * Executes a local update and send package to remote server.
+     * It will wait for remote ACK package using {@link EventManager#ackSocket}
+     * socket
+     * In case package is received, return true. Return false otherwise
+     * 
+     * @param port
+     * @param id
+     * @return boolean
+     */
     public boolean remote(int port, int id) {
         logger.log(Level.FINER, String.format("Remote event triggered"));
         try {
             logger.log(Level.FINER, String.format("Triggering Local event..."));
-            
+
             this.clock.update(this.clockPosition);
 
             String array = this.clock.serialize();
@@ -77,6 +119,13 @@ public class EventManager {
         return false;
     }
 
+    /**
+     * Receives a remote vectorial clock and update with local clock.
+     * 
+     * @param remoteClock
+     * @param idSender
+     * @return boolean
+     */
     public boolean receive(int[] remoteClock, int idSender) {
         logger.log(Level.FINE,
                 String.format("Updating local clock with remote clock.\nRemote clock is %s\nLocal clock is %s",
@@ -90,11 +139,17 @@ public class EventManager {
         return true;
     }
 
+    /**
+     * @return String
+     */
     @Override
     public String toString() {
         return this.clock.toString();
     }
 
+    /**
+     * Builder for {@link EventManagerBuilder}
+     */
     public static class EventManagerBuilder {
         static final Logger logger = Logger.getGlobal();
 
