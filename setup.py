@@ -10,10 +10,12 @@ file = open(FILENAME)
 counter = len(file.readlines())
 
 print("CREATING PROCESSES...")
+
 for i in range(counter):
-    operation = "gnome-terminal -e 'bash -c \"java app/server/ServerSetup {filename} {value};exec bash; \"\' ".format(
-        filename=FILENAME, value=i)
-    # print(operation)
+    logfilename = "{logname}_{id}.txt".format(
+        logname=os.path.basename(FILENAME.split(".txt")[0]), id=i)
+    operation = "gnome-terminal -e 'bash -c \"java app/server/ServerSetup {filename} {value} 2>&1 | tee logs/{logname} ;exec bash; \"\' ".format(
+        filename=FILENAME, value=i, logname=logfilename)
     os.system(operation)
 print("PROCESSES CREATED.")
 

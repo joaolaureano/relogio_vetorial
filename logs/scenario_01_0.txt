@@ -1,0 +1,89 @@
+[2022-11-07 13:39:14] [CONFIG ] ServerSetup is up. 
+[2022-11-07 13:39:14] [INFO   ] Initializing server... 
+[2022-11-07 13:39:14] [INFO   ] Id is 1 
+[2022-11-07 13:39:14] [INFO   ] Clock Position is 0 
+[2022-11-07 13:39:14] [CONFIG ] Server port is 4001 
+[2022-11-07 13:39:14] [CONFIG ] Chance for a remote event is 50.000000 
+[2022-11-07 13:39:14] [CONFIG ] Amount of events to be fired is 10 
+[2022-11-07 13:39:14] [CONFIG ] Range for delay values is 200 to 350 
+[2022-11-07 13:39:14] [CONFIG ] Process Neighbors ports are [1234] 
+[2022-11-07 13:39:14] [CONFIG ] Process Neighbors ID's are [2] 
+[2022-11-07 13:39:14] [CONFIG ] Socket port is 5000 
+[2022-11-07 13:39:14] [CONFIG ] Joined Multicast group
+IP is 230.0.0.0. 
+[2022-11-07 13:39:14] [CONFIG ] Multicast Socket timeout is 1000 milisseconds 
+[2022-11-07 13:39:14] [CONFIG ] Created a Multicast Socket. 
+[2022-11-07 13:39:14] [WARNING] Server is LOCKED... 
+...............[2022-11-07 13:39:29] [FINE   ] Received a package. 
+Origin port is 5000
+Package content is SETUP 
+[2022-11-07 13:39:29] [INFO   ] Server is UNLOCKED 
+[2022-11-07 13:39:29] [CONFIG ] Socket port is 4001 
+[2022-11-07 13:39:29] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
+[2022-11-07 13:39:29] [CONFIG ] Created a Unicast Socket. 
+[2022-11-07 13:39:29] [CONFIG ] Socket port is 4002 
+[2022-11-07 13:39:29] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
+[2022-11-07 13:39:29] [CONFIG ] Created a Unicast Socket. 
+[2022-11-07 13:39:29] [CONFIG ] Initializing EventManager 
+[2022-11-07 13:39:29] [FINE   ] Process ID setted.
+Size is 1  
+[2022-11-07 13:39:29] [FINE   ] Clock Index position setted.
+Index is 0  
+[2022-11-07 13:39:29] [FINE   ] Maximum events setted.
+Value is 10  
+[2022-11-07 13:39:29] [FINE   ] Clock size setted.
+Size is 2  
+[2022-11-07 13:39:29] [CONFIG ] New Clock created. Clock size is 2 
+[2022-11-07 13:39:29] [FINE   ] Unicast Socket added to build ServerListener.
+Port is 4001  
+[2022-11-07 13:39:29] [FINE   ] ACK Socket added to build ServerListener.
+Port is 4002  
+[2022-11-07 13:39:29] [FINE   ] Building a new EventManager. 
+[2022-11-07 13:39:29] [CONFIG ] Event Manager added to build ServerListener.
+Clock status is [0, 0]. 
+[2022-11-07 13:39:29] [CONFIG ] Unicast Socket added to build ServerListener.
+Port is 4001  
+[2022-11-07 13:39:29] [CONFIG ] Building a new ServerListener. 
+[2022-11-07 13:39:29] [CONFIG ] Remote chance value 50.000000. 
+[2022-11-07 13:39:29] [CONFIG ] Event Manager added to build ServerListener.
+Clock status is [0, 0]. 
+[2022-11-07 13:39:29] [CONFIG ] Minimum Delay value is 200. 
+[2022-11-07 13:39:29] [CONFIG ] Maximum Delay value is 350. 
+[2022-11-07 13:39:29] [CONFIG ] Server List is [1234]. 
+[2022-11-07 13:39:29] [CONFIG ] ID List is [2]. 
+[2022-11-07 13:39:29] [INFO   ] Building a new ServerSender. 
+[2022-11-07 13:39:29] [INFO   ] Initializing ServerListener Thread 
+[2022-11-07 13:39:29] [INFO   ] Initializing ServerSender Thread 
+[2022-11-07 13:39:29] [FINE   ] Decreased number of events.Current value is 9 
+[2022-11-07 13:39:29] [INFO   ] 1 [1, 0] L 
+[2022-11-07 13:39:30] [FINE   ] Decreased number of events.Current value is 8 
+[2022-11-07 13:39:30] [INFO   ] 1 [2, 0] S 2 
+[2022-11-07 13:39:30] [FINE   ] Received an ACK package from 1234 
+[2022-11-07 13:39:30] [FINE   ] Decreased number of events.Current value is 7 
+[2022-11-07 13:39:30] [INFO   ] 1 [3, 0] S 2 
+[2022-11-07 13:39:30] [FINE   ] Received an ACK package from 1234 
+[2022-11-07 13:39:30] [FINE   ] Received an EVENT package 
+[2022-11-07 13:39:30] [FINE   ] Decreased number of events.Current value is 6 
+[2022-11-07 13:39:30] [FINE   ] Updating local clock with remote clock.	Remote clock is [3, 6]	Local clock is [3, 0] 
+[2022-11-07 13:39:30] [INFO   ] 1 [4, 6] R 2 [3, 6] 
+[2022-11-07 13:39:30] [FINE   ] Sent ACK to port 1234 
+[2022-11-07 13:39:30] [FINE   ] Decreased number of events.Current value is 5 
+[2022-11-07 13:39:30] [INFO   ] 1 [5, 6] L 
+[2022-11-07 13:39:31] [FINE   ] Decreased number of events.Current value is 4 
+[2022-11-07 13:39:31] [INFO   ] 1 [6, 6] S 2 
+[2022-11-07 13:39:31] [FINE   ] Received an ACK package from 1234 
+[2022-11-07 13:39:31] [FINE   ] Decreased number of events.Current value is 3 
+[2022-11-07 13:39:31] [INFO   ] 1 [7, 6] L 
+[2022-11-07 13:39:31] [FINE   ] Decreased number of events.Current value is 2 
+[2022-11-07 13:39:31] [INFO   ] 1 [8, 6] S 2 
+[2022-11-07 13:39:31] [FINE   ] Received an ACK package from 1234 
+[2022-11-07 13:39:31] [FINE   ] Decreased number of events.Current value is 1 
+[2022-11-07 13:39:31] [INFO   ] 1 [9, 6] S 2 
+[2022-11-07 13:39:31] [FINE   ] Received an ACK package from 1234 
+[2022-11-07 13:39:32] [FINE   ] Decreased number of events.Current value is 0 
+[2022-11-07 13:39:32] [INFO   ] 1 [10, 6] L 
+[2022-11-07 13:39:32] [FINE   ] Received an EVENT package 
+[2022-11-07 13:39:32] [FINE   ] Number of events is 0 
+[2022-11-07 13:39:32] [INFO   ] Number of Events is 0. 
+[2022-11-07 13:39:32] [INFO   ] Final clock status is [10, 6] 
+[2022-11-07 13:39:32] [INFO   ] Ending process... 
