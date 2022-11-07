@@ -71,6 +71,7 @@ public class ServerListener extends Thread {
                 USocketPayload socketPayload = unicastSocket.receivePacket();
                 int port = socketPayload.getPort();
                 String vars = socketPayload.getContent();
+                InetAddress address = socketPayload.getAddress();
 
                 // logger.log(Level.OFF,
                 // String.format(
@@ -95,17 +96,16 @@ public class ServerListener extends Thread {
                             Arrays.toString(clock)));
 
                     String ackMessage = "ACK";
-                    unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"), port);
-                    logger.log(Level.FINE, String.format("Sent ACK to port %d", port));
+                    unicastSocket.sendPacket(ackMessage, address, port);
+                    logger.log(Level.FINE, String.format("Sent ACK to  %s:%d", address, port));
 
                 } else if (vars.startsWith("ACK")) {
-                    logger.log(Level.FINE, String.format("Received an ACK package from %d", port));
+                    logger.log(Level.FINE, String.format("Received an ACK package from %s:%d", address,port));
 
-                    logger.log(Level.FINEST, String.format("Moving ACK to internal socket.\nInternal Port is %d",
+                    logger.log(Level.FINEST, String.format("Moving ACK to internal socket.\tInternal Port is %d",
                             this.unicastSocket.getLocalPort() + 1));
                     String ackMessage = "ACK";
-                    unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"),
-                            this.unicastSocket.getLocalPort() + 1);
+                    unicastSocket.sendPacket(ackMessage, address, this.unicastSocket.getLocalPort() + 1);
                 }
 
             } catch (Exception e) {

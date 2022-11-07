@@ -52,6 +52,10 @@ public class ServerSender extends Thread {
      * List of all neighbor servers ID
      */
     protected List<Integer> idList;
+    /**
+     * List of all neighbor servers addresses
+     */
+    private List<String> addressList;
 
     /**
      * Main builder for ServerSender.
@@ -66,6 +70,7 @@ public class ServerSender extends Thread {
         this.serverList = builder.serverList;
         this.eventManager = builder.eventManager;
         this.idList = builder.idList;
+        this.addressList = builder.addressList;
     }
 
     /**
@@ -132,8 +137,9 @@ public class ServerSender extends Thread {
             int randomNum = (new Random()).nextInt(this.serverList.size());
             int port = this.serverList.get(randomNum);
             int id = this.idList.get(randomNum);
+            String address = this.addressList.get(randomNum);
             logger.log(Level.FINEST, String.format("Remote port is %d\nRemote ID is %d", port, id));
-            success = this.eventManager.remote(port, id);
+            success = this.eventManager.remote(port, id, address);
 
         } else {
             logger.log(Level.FINEST, "Local Event triggered.");
@@ -187,6 +193,11 @@ public class ServerSender extends Thread {
          */
         private List<Integer> idList;
 
+        /**
+         * List of all neighbor servers addresses
+         */
+        private List<String> addressList;
+
         public ServerSenderBuilder setEventManager(EventManager eManager) {
             this.eventManager = eManager;
             logger.log(Level.CONFIG, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
@@ -227,6 +238,14 @@ public class ServerSender extends Thread {
             this.idList = idList;
             logger.log(Level.CONFIG, String.format("ID List is %s.",
                     Arrays.toString(idList.toArray())));
+
+            return this;
+        }
+
+        public ServerSenderBuilder setAddressesList(List<String> addressList) {
+            this.addressList = addressList;
+            logger.log(Level.CONFIG, String.format("Address List is %s.",
+                    Arrays.toString(addressList.toArray())));
 
             return this;
         }

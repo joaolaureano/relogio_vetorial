@@ -52,24 +52,28 @@ public class ServerSetup {
          */
         List<String> idList = new ArrayList<>();
         List<String> portList = new ArrayList<>();
+        List<String> addressList = new ArrayList<>();
         for (String line : lineList) {
             String[] splitLine = line.split("\\s");
             if (splitLine[2].equals(configLine[2]))
                 continue;
             idList.add(splitLine[0]);
+            addressList.add(splitLine[1]);
             portList.add(splitLine[2]);
         }
 
         (new ServerBuilder()
-                .setId(configLine[0])
                 .setPosition(args[1])
+                .setId(configLine[0])
+                .setAddress(configLine[1])
                 .setPort(configLine[2])
                 .setChance(configLine[3])
                 .setEvents(configLine[4])
                 .setMinDelay(configLine[5])
                 .setMaxDelay(configLine[6])
                 .setServerList(String.join(",", portList))
-                .setIdList(String.join(",", idList)))
+                .setIdList(String.join(",", idList))
+                .setAddressList(String.join(",", addressList)))
                 .build();
     }
 }

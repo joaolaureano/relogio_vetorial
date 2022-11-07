@@ -64,6 +64,20 @@ public class USocket {
         }
     }
 
+    public USocket(int port, InetAddress addr) {
+        try {
+            this.datagramSocket = new DatagramSocket(port, addr);
+            logger.log(Level.CONFIG, String.format("Socket port is %d", port));
+            datagramSocket.setSoTimeout(TIMEOUT);
+            logger.log(Level.CONFIG, String.format("Unicast Socket timeout is %d milisseconds", TIMEOUT));
+            logger.log(Level.CONFIG, "Created a Unicast Socket.");
+        } catch (BindException e) {
+            logger.log(Level.SEVERE, String.format("Port is already in use. Terminating execution"));
+            System.exit(0);
+        } catch (IOException e) {
+        }
+    }
+
     /**
      * Sends a packet with String content to specific address and port
      * 

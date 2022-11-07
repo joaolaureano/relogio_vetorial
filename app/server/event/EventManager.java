@@ -95,7 +95,7 @@ public class EventManager {
      * @param id
      * @return boolean
      */
-    public boolean remote(int port, int id) {
+    public boolean remote(int port, int id, String address) {
         logger.log(Level.FINER, String.format("Remote event triggered"));
         try {
             logger.log(Level.FINER, String.format("Triggering Local event..."));
@@ -109,7 +109,7 @@ public class EventManager {
             logger.log(Level.FINEST,
                     String.format("Sending remote package.\nContent is %s\nPort is %d.\nId is %d", content, port, id));
 
-            unicastSocket.sendPacket(content, InetAddress.getByName("localhost"), port);
+            unicastSocket.sendPacket(content, InetAddress.getByName(address), port);
 
             logger.log(Level.FINEST, String.format("New clock status is %s ",
                     this.clock.toString()));

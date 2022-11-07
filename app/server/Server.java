@@ -2,6 +2,7 @@ package app.server;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -89,36 +90,43 @@ public class Server {
         int id = Integer.parseInt(args[0]);
         logger.log(Level.INFO, String.format("Id is %d", id));
 
-        int position = Integer.parseInt(args[1]);
+        String address = args[1];
+        int position = Integer.parseInt(args[2]);
         logger.log(Level.INFO, String.format("Clock Position is %d", position));
 
-        int port = Integer.parseInt(args[2]);
+        int port = Integer.parseInt(args[3]);
         logger.log(Level.CONFIG, String.format("Server port is %d", port));
 
-        double chance = Double.parseDouble(args[3]);
+        double chance = Double.parseDouble(args[4]);
         logger.log(Level.CONFIG, String.format("Chance for a remote event is %f", chance));
 
-        int events = Integer.parseInt(args[4]);
+        int events = Integer.parseInt(args[5]);
         logger.log(Level.CONFIG, String.format("Amount of events to be fired is %d", events));
 
-        int minDelay = Integer.parseInt(args[5]);
-        int maxDelay = Integer.parseInt(args[6]);
+        int minDelay = Integer.parseInt(args[6]);
+        int maxDelay = Integer.parseInt(args[7]);
         logger.log(Level.CONFIG, String.format("Range for delay values is %d to %d", minDelay, maxDelay));
 
         List<Integer> serverList;
         serverList = new ArrayList<Integer>();
-        Stream.of(args[7].split(",")).map(Integer::valueOf).forEach(serverList::add);
+        Stream.of(args[8].split(",")).map(Integer::valueOf).forEach(serverList::add);
         logger.log(Level.CONFIG,
                 String.format("Process Neighbors ports are %s", Arrays.toString(serverList.toArray())));
 
         List<Integer> idList;
         idList = new ArrayList<Integer>();
-        Stream.of(args[8].split(",")).map(Integer::valueOf).forEach(idList::add);
+        Stream.of(args[9].split(",")).map(Integer::valueOf).forEach(idList::add);
         logger.log(Level.CONFIG, String.format("Process Neighbors ID's are %s", Arrays.toString(idList.toArray())));
+
+        List<String> addressList;
+        addressList = new ArrayList<String>();
+        Stream.of(args[10].split(",")).map(String::valueOf).forEach(addressList::add);
+        logger.log(Level.CONFIG,
+                String.format("Process Neighbors addresses are %s", Arrays.toString(addressList.toArray())));
 
         waitForUnlock();
 
-        USocket socket = new USocket(port);
+        USocket socket = new USocket(port, InetAddress.getByName(address));
         USocket socketAck = new USocket(port + 1);
 
         logger.log(Level.CONFIG, "Initializing EventManager");
@@ -143,6 +151,7 @@ public class Server {
                 .setMaxDelay(maxDelay)
                 .setServerList(serverList)
                 .setIdList(idList)
+                .setAddressesList(addressList)
                 .build());
 
         logger.log(Level.INFO, "Initializing ServerListener Thread");
@@ -153,7 +162,8 @@ public class Server {
         // sender.join();
 
         // logger.log(Level.INFO, String.format("Number of Events is 0."));
-        // logger.log(Level.INFO, String.format("Final clock status is %s", eventManager.toString()));
+        // logger.log(Level.INFO, String.format("Final clock status is %s",
+        // eventManager.toString()));
         // logger.log(Level.INFO, String.format("Ending process..."));
         // System.exit(0);
     }
@@ -193,9 +203,11 @@ public class Server {
         private String events;
         private String minDelay;
         private String maxDelay;
+        private String address;
 
         private String serverList;
         private String idList;
+        private String addressList;
 
         public ServerBuilder setId(String id) {
             this.id = id;
@@ -209,6 +221,16 @@ public class Server {
 
         public ServerBuilder setIdList(String idList) {
             this.idList = idList;
+            return this;
+        }
+
+        public ServerBuilder setAddressList(String addressList) {
+            this.addressList = addressList;
+            return this;
+        }
+
+        public ServerBuilder setAddress(String address) {
+            this.address = address;
             return this;
         }
 
@@ -243,8 +265,9 @@ public class Server {
         }
 
         public void build() throws IOException, InterruptedException {
-            String[] arguments = { this.id, this.position, this.port, this.chance, this.events, this.minDelay,
-                    this.maxDelay, this.serverList, this.idList };
+            String[] arguments = { this.id, this.address, this.position, this.port, this.chance, this.events,
+                    this.minDelay,
+                    this.maxDelay, this.serverList, this.idList, this.addressList };
             Server.main(arguments);
         }
 
