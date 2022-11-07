@@ -107,7 +107,7 @@ public class EventManager {
             String content = String.format("EVENT - %d - %s", processId, array);
 
             logger.log(Level.FINEST,
-                    String.format("Sending remote package.\nContent is %s\nPort is %d.\nId is %d", content, port, id));
+                    String.format("Sending remote package.\tContent is %s\tAddress is %s\tPort is %d.\tId is %d", content, address,port, id));
 
             unicastSocket.sendPacket(content, InetAddress.getByName(address), port);
 
@@ -185,42 +185,42 @@ public class EventManager {
         USocket ackSocket;
 
         public EventManagerBuilder setClockSize(int clockSize) {
-            logger.log(Level.FINE, String.format("Clock size setted.\nSize is %d ",
+            logger.log(Level.FINE, String.format("Clock size setted.\tSize is %d ",
                     clockSize));
             this.clock = ClockManager.getInstance(clockSize);
             return this;
         }
 
         public EventManagerBuilder setProcessId(int processId) {
-            logger.log(Level.FINE, String.format("Process ID setted.\nSize is %d ",
+            logger.log(Level.FINE, String.format("Process ID setted.\tSize is %d ",
                     processId));
             this.processId = processId;
             return this;
         }
 
         public EventManagerBuilder setEvents(int events) {
-            logger.log(Level.FINE, String.format("Maximum events setted.\nValue is %d ",
+            logger.log(Level.FINE, String.format("Maximum events setted.\tValue is %d ",
                     events));
             this.events = events;
             return this;
         }
 
         public EventManagerBuilder setClockPosition(int clockPosition) {
-            logger.log(Level.FINE, String.format("Clock Index position setted.\nIndex is %d ",
+            logger.log(Level.FINE, String.format("Clock Index position setted.\tIndex is %d ",
                     clockPosition));
             this.clockPosition = clockPosition;
             return this;
         }
 
         public EventManagerBuilder setSocket(USocket socket) {
-            logger.log(Level.FINE, String.format("Unicast Socket added to build ServerListener.\nPort is %d ",
+            logger.log(Level.FINE, String.format("Unicast Socket added to build ServerListener.\tPort is %d ",
                     socket.getLocalPort()));
             this.unicastSocket = socket;
             return this;
         }
 
         public EventManagerBuilder setAckSocket(USocket socket) {
-            logger.log(Level.FINE, String.format("ACK Socket added to build ServerListener.\nPort is %d ",
+            logger.log(Level.FINE, String.format("ACK Socket added to build ServerListener.\tPort is %d ",
                     socket.getLocalPort()));
             this.ackSocket = socket;
             return this;

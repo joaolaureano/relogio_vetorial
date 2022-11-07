@@ -59,7 +59,7 @@ public class ServerManager {
         port = Integer.parseInt(args[1]);
         socket = new MSocket(port, multicastAddress);
         logger.log(Level.FINER,
-                String.format("Server manager info.\nMulticast Address is %s\nPort is %d",
+                String.format("Server manager info.\tMulticast Address is %s\tPort is %d",
                         multicastAddress, port));
 
         while (counter > 0) {

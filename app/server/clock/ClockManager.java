@@ -82,7 +82,7 @@ public class ClockManager implements IClockManager {
      * @param remoteClock   Remote clock to compare with
      */
     public void update(int queuePosition, int[] remoteClock) {
-        logger.log(Level.FINER, String.format("Comparing Clock to remote Clock.\nRemote clock is %s\nLocal clock is %s",
+        logger.log(Level.FINER, String.format("Comparing Clock to remote Clock.\tRemote clock is %s\tLocal clock is %s",
                 Arrays.toString(remoteClock), Arrays.toString(clock)));
         synchronized (clock) {
             for (int i = 0; i < clock.length; i++)
