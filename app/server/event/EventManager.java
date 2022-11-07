@@ -144,6 +144,12 @@ public class EventManager {
         return true;
     }
 
+    /**
+     * If there is available events, decrease it and return true. Return false
+     * otherwise
+     * 
+     * @return true if there is available events. Return false otherwise
+     */
     public boolean decreaseEvent() {
         synchronized (this) {
             if (events > 0) {

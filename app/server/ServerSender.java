@@ -103,6 +103,9 @@ public class ServerSender extends Thread {
 
     /**
      * This is the main method to decide the remote or local event
+     * It will try to decrease the number of events. In case not possible, will log
+     * and end execution.
+     * If there are available events , will continue as below
      * It will calculate a random number and compare with
      * {@link ServerSender#chance} field.
      * In case it is smaller or equal, it will trigger a remote event. Otherwise,
@@ -113,9 +116,6 @@ public class ServerSender extends Thread {
      */
     public boolean nextEvent() {
 
-        double nextChance = Math.random();
-        boolean success = false;
-        logger.log(Level.FINEST, String.format("Chance value calculated. Chance value is %f", nextChance));
         boolean isEventAvailable = this.eventManager.decreaseEvent();
         if (!isEventAvailable) {
             logger.log(Level.INFO, String.format("Number of Events is 0."));
@@ -123,6 +123,9 @@ public class ServerSender extends Thread {
             logger.log(Level.INFO, String.format("Ending process..."));
             System.exit(0);
         }
+        double nextChance = Math.random();
+        boolean success = false;
+        logger.log(Level.FINEST, String.format("Chance value calculated. Chance value is %f", nextChance));
         if (nextChance <= chance) {
 
             logger.log(Level.FINEST, String.format("Remote Event triggered."));

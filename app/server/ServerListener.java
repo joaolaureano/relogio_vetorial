@@ -57,9 +57,11 @@ public class ServerListener extends Thread {
      * It will listen to any package that might be becoming, given Socket timeout.
      * In case the number of events is 0, therefore no more events will need be
      * triggered, and execution will be finalized.
-     * In case packet is EVENT type, it will trigger
-     * {@link EventManager#receive(int[], int)} to update clock.
-     * It will also send a ACK packet to origin host
+     * In case packet is EVENT type, it will verify if there're events available.
+     * In case there are not events, it will log and end execution
+     * In case there are events, will trigger
+     * {@link EventManager#receive(int[], int)} to
+     * update clock. It will also send a ACK packet to origin host
      * In case packet is ACK type, it will send the packet to internal
      * {@link EventManager#clock}, in order to satisfy socket timeout
      */
