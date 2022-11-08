@@ -1,244 +1,214 @@
-[2022-11-07 20:46:05] [CONFIG ] ServerSetup is up. 
-[2022-11-07 20:46:05] [INFO   ] Initializing server... 
-[2022-11-07 20:46:05] [INFO   ] Id is 2 
-[2022-11-07 20:46:05] [INFO   ] Clock Position is 1 
-[2022-11-07 20:46:05] [CONFIG ] Server port is 1234 
-[2022-11-07 20:46:05] [CONFIG ] Chance for a remote event is 50.000000 
-[2022-11-07 20:46:05] [CONFIG ] Amount of events to be fired is 15 
-[2022-11-07 20:46:05] [CONFIG ] Range for delay values is 200 to 350 
-[2022-11-07 20:46:05] [CONFIG ] Process Neighbors ports are [4001] 
-[2022-11-07 20:46:05] [CONFIG ] Process Neighbors ID's are [1] 
-[2022-11-07 20:46:05] [CONFIG ] Process Neighbors addresses are [192.168.80.1] 
-[2022-11-07 20:46:05] [CONFIG ] Socket port is 5000 
-[2022-11-07 20:46:05] [CONFIG ] Joined Multicast group
+[2022-11-07 21:04:46] [CONFIG ] ServerSetup is up. 
+[2022-11-07 21:04:46] [INFO   ] Initializing server... 
+[2022-11-07 21:04:46] [INFO   ] Id is 2 
+[2022-11-07 21:04:46] [INFO   ] Clock Position is 1 
+[2022-11-07 21:04:46] [CONFIG ] Server port is 4001 
+[2022-11-07 21:04:46] [CONFIG ] Chance for a remote event is 50.000000 
+[2022-11-07 21:04:46] [CONFIG ] Amount of events to be fired is 10 
+[2022-11-07 21:04:46] [CONFIG ] Range for delay values is 200 to 350 
+[2022-11-07 21:04:46] [CONFIG ] Process Neighbors ports are [1234] 
+[2022-11-07 21:04:46] [CONFIG ] Process Neighbors ID's are [1] 
+[2022-11-07 21:04:46] [CONFIG ] Process Neighbors addresses are [192.168.80.1] 
+[2022-11-07 21:04:46] [CONFIG ] Socket port is 5000 
+[2022-11-07 21:04:46] [CONFIG ] Joined Multicast group
 IP is 230.0.0.0. 
-[2022-11-07 20:46:05] [CONFIG ] Multicast Socket timeout is 1000 milisseconds 
-[2022-11-07 20:46:05] [CONFIG ] Created a Multicast Socket. 
-[2022-11-07 20:46:05] [WARNING] Server is LOCKED... 
-...............[2022-11-07 20:46:20] [FINE   ] Received a package. 
+[2022-11-07 21:04:46] [CONFIG ] Multicast Socket timeout is 1000 milisseconds 
+[2022-11-07 21:04:46] [CONFIG ] Created a Multicast Socket. 
+[2022-11-07 21:04:46] [WARNING] Server is LOCKED... 
+...............[2022-11-07 21:05:02] [FINE   ] Received a package. 
 Origin port is 5000
 Package content is SETUP 
-[2022-11-07 20:46:20] [INFO   ] Server is UNLOCKED 
-[2022-11-07 20:46:20] [CONFIG ] Socket port is 1234 
-[2022-11-07 20:46:20] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
-[2022-11-07 20:46:20] [CONFIG ] Created a Unicast Socket. 
-[2022-11-07 20:46:20] [CONFIG ] Socket port is 1235 
-[2022-11-07 20:46:20] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
-[2022-11-07 20:46:20] [CONFIG ] Created a Unicast Socket. 
-[2022-11-07 20:46:20] [CONFIG ] Initializing EventManager 
-[2022-11-07 20:46:20] [FINE   ] Process ID setted.	Size is 2  
-[2022-11-07 20:46:20] [FINE   ] Clock Index position setted.	Index is 1  
-[2022-11-07 20:46:20] [FINE   ] Maximum events setted.	Value is 15  
-[2022-11-07 20:46:20] [FINE   ] Clock size setted.	Size is 2  
-[2022-11-07 20:46:20] [CONFIG ] New Clock created. Clock size is 2 
-[2022-11-07 20:46:20] [FINE   ] Unicast Socket added to build ServerListener.	Port is 1234  
-[2022-11-07 20:46:20] [FINE   ] ACK Socket added to build ServerListener.	Port is 1235  
-[2022-11-07 20:46:20] [FINE   ] Building a new EventManager. 
-[2022-11-07 20:46:20] [CONFIG ] Event Manager added to build ServerListener.
+[2022-11-07 21:05:02] [INFO   ] Server is UNLOCKED 
+[2022-11-07 21:05:02] [CONFIG ] Socket port is 4001 
+[2022-11-07 21:05:02] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
+[2022-11-07 21:05:02] [CONFIG ] Created a Unicast Socket. 
+[2022-11-07 21:05:02] [CONFIG ] Socket port is 4002 
+[2022-11-07 21:05:02] [CONFIG ] Unicast Socket timeout is 1000 milisseconds 
+[2022-11-07 21:05:02] [CONFIG ] Created a Unicast Socket. 
+[2022-11-07 21:05:02] [CONFIG ] Initializing EventManager 
+[2022-11-07 21:05:02] [FINE   ] Process ID setted.	Size is 2  
+[2022-11-07 21:05:02] [FINE   ] Clock Index position setted.	Index is 1  
+[2022-11-07 21:05:02] [FINE   ] Maximum events setted.	Value is 10  
+[2022-11-07 21:05:02] [FINE   ] Clock size setted.	Size is 2  
+[2022-11-07 21:05:02] [CONFIG ] New Clock created. Clock size is 2 
+[2022-11-07 21:05:02] [FINE   ] Unicast Socket added to build ServerListener.	Port is 4001  
+[2022-11-07 21:05:02] [FINE   ] ACK Socket added to build ServerListener.	Port is 4002  
+[2022-11-07 21:05:02] [FINE   ] Building a new EventManager. 
+[2022-11-07 21:05:02] [CONFIG ] Event Manager added to build ServerListener.
 Clock status is [0, 0]. 
-[2022-11-07 20:46:20] [CONFIG ] Unicast Socket added to build ServerListener.
-Port is 1234  
-[2022-11-07 20:46:20] [CONFIG ] Building a new ServerListener. 
-[2022-11-07 20:46:20] [CONFIG ] Remote chance value 50.000000. 
-[2022-11-07 20:46:20] [CONFIG ] Event Manager added to build ServerListener.
+[2022-11-07 21:05:02] [CONFIG ] Unicast Socket added to build ServerListener.
+Port is 4001  
+[2022-11-07 21:05:02] [CONFIG ] Building a new ServerListener. 
+[2022-11-07 21:05:02] [CONFIG ] Remote chance value 50.000000. 
+[2022-11-07 21:05:02] [CONFIG ] Event Manager added to build ServerListener.
 Clock status is [0, 0]. 
-[2022-11-07 20:46:20] [CONFIG ] Minimum Delay value is 200. 
-[2022-11-07 20:46:20] [CONFIG ] Maximum Delay value is 350. 
-[2022-11-07 20:46:20] [CONFIG ] Server List is [4001]. 
-[2022-11-07 20:46:20] [CONFIG ] ID List is [1]. 
-[2022-11-07 20:46:20] [CONFIG ] Address List is [192.168.80.1]. 
-[2022-11-07 20:46:20] [INFO   ] Building a new ServerSender. 
-[2022-11-07 20:46:20] [INFO   ] Initializing ServerListener Thread 
-[2022-11-07 20:46:20] [INFO   ] Initializing ServerSender Thread 
-[2022-11-07 20:46:20] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:20] [FINER  ] Thread sleeping for 332 seconds 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 14 
-[2022-11-07 20:46:21] [FINEST ] Chance value calculated. Chance value is 0.436710 
-[2022-11-07 20:46:21] [FINEST ] Remote Event triggered. 
-[2022-11-07 20:46:21] [FINEST ] Remote port is 4001
+[2022-11-07 21:05:02] [CONFIG ] Minimum Delay value is 200. 
+[2022-11-07 21:05:02] [CONFIG ] Maximum Delay value is 350. 
+[2022-11-07 21:05:02] [CONFIG ] Server List is [1234]. 
+[2022-11-07 21:05:02] [CONFIG ] ID List is [1]. 
+[2022-11-07 21:05:02] [CONFIG ] Address List is [192.168.80.1]. 
+[2022-11-07 21:05:02] [INFO   ] Building a new ServerSender. 
+[2022-11-07 21:05:02] [INFO   ] Initializing ServerListener Thread 
+[2022-11-07 21:05:02] [INFO   ] Initializing ServerSender Thread 
+[2022-11-07 21:05:02] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:02] [FINER  ] Thread sleeping for 254 seconds 
+[2022-11-07 21:05:02] [FINE   ] Decreased number of events.Current value is 9 
+[2022-11-07 21:05:02] [FINEST ] Chance value calculated. Chance value is 0.266485 
+[2022-11-07 21:05:02] [FINEST ] Remote Event triggered. 
+[2022-11-07 21:05:02] [FINEST ] Remote port is 1234
 Remote ID is 1 
-[2022-11-07 20:46:21] [FINER  ] Remote event triggered 
-[2022-11-07 20:46:21] [FINER  ] Triggering Local event... 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [0, 1] 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
-Origin port is 4001
-Package content is EVENT - 1 - 1,0 
-[2022-11-07 20:46:21] [FINE   ] Received an EVENT package 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 13 
-[2022-11-07 20:46:21] [FINER  ] Serialized Clock is 0,1 
-[2022-11-07 20:46:21] [FINEST ] Sending remote package.	Content is EVENT - 2 - 0,1	Address is 192.168.80.1	Port is 4001.	Id is 1 
-[2022-11-07 20:46:21] [FINER  ] Deserialized Clock is [1, 0] 
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 4001
+[2022-11-07 21:05:02] [FINER  ] Remote event triggered 
+[2022-11-07 21:05:02] [FINER  ] Triggering Local event... 
+[2022-11-07 21:05:02] [FINER  ] Updated Clock is [0, 1] 
+[2022-11-07 21:05:02] [FINER  ] Serialized Clock is 0,1 
+[2022-11-07 21:05:02] [FINEST ] Sending remote package.	Content is EVENT - 2 - 0,1	Address is 192.168.80.1	Port is 1234.	Id is 1 
+[2022-11-07 21:05:02] [FINEST ] Sent a package. 
+Destiny port is 1234
 Package content is EVENT - 2 - 0,1 
-[2022-11-07 20:46:21] [FINE   ] Updating local clock with remote clock.	Remote clock is [1, 0]	Local clock is [0, 1] 
-[2022-11-07 20:46:21] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [1, 0]	Local clock is [0, 1] 
-[2022-11-07 20:46:21] [FINEST ] New clock status is [0, 1]  
-[2022-11-07 20:46:21] [INFO   ] 2 [0, 1] S 1 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [1, 2] 
-[2022-11-07 20:46:21] [INFO   ] 2 [1, 2] R 1 [1, 0] 
-[2022-11-07 20:46:21] [FINEST ] Origin Clock status is [1, 0]  
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 4001
-Package content is ACK 
-[2022-11-07 20:46:21] [FINE   ] Sent ACK to  /192.168.80.1:4001 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
-Origin port is 4001
-Package content is ACK 
-[2022-11-07 20:46:21] [FINE   ] Received an ACK package from /192.168.80.1:4001 
-[2022-11-07 20:46:21] [FINEST ] Moving ACK to internal socket.	Internal Port is 1235 
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 1235
-Package content is ACK 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
+[2022-11-07 21:05:02] [FINEST ] New clock status is [0, 1]  
+[2022-11-07 21:05:02] [INFO   ] 2 [0, 1] S 1 
+[2022-11-07 21:05:02] [FINEST ] Received a package. 
 Origin port is 1234
 Package content is ACK 
-[2022-11-07 20:46:21] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:21] [FINER  ] Thread sleeping for 268 seconds 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 12 
-[2022-11-07 20:46:21] [FINEST ] Chance value calculated. Chance value is 0.799685 
-[2022-11-07 20:46:21] [FINEST ] Local Event triggered. 
-[2022-11-07 20:46:21] [FINER  ] Local event triggered 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [1, 3] 
-[2022-11-07 20:46:21] [FINEST ] New clock status is [1, 3]  
-[2022-11-07 20:46:21] [INFO   ] 2 [1, 3] L 
-[2022-11-07 20:46:21] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:21] [FINER  ] Thread sleeping for 215 seconds 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
+[2022-11-07 21:05:02] [FINE   ] Received an ACK package from /192.168.80.1:1234 
+[2022-11-07 21:05:02] [FINEST ] Moving ACK to internal socket.	Internal Port is 4002 
+[2022-11-07 21:05:02] [FINEST ] Sent a package. 
+Destiny port is 4002
+Package content is ACK 
+[2022-11-07 21:05:02] [FINEST ] Received a package. 
 Origin port is 4001
+Package content is ACK 
+[2022-11-07 21:05:02] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:02] [FINER  ] Thread sleeping for 237 seconds 
+[2022-11-07 21:05:02] [FINE   ] Decreased number of events.Current value is 8 
+[2022-11-07 21:05:02] [FINEST ] Chance value calculated. Chance value is 0.704879 
+[2022-11-07 21:05:02] [FINEST ] Local Event triggered. 
+[2022-11-07 21:05:02] [FINER  ] Local event triggered 
+[2022-11-07 21:05:02] [FINER  ] Updated Clock is [0, 2] 
+[2022-11-07 21:05:02] [FINEST ] New clock status is [0, 2]  
+[2022-11-07 21:05:02] [INFO   ] 2 [0, 2] L 
+[2022-11-07 21:05:02] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:02] [FINER  ] Thread sleeping for 336 seconds 
+[2022-11-07 21:05:02] [FINEST ] Received a package. 
+Origin port is 1234
 Package content is EVENT - 1 - 3,1 
-[2022-11-07 20:46:21] [FINE   ] Received an EVENT package 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 11 
-[2022-11-07 20:46:21] [FINER  ] Deserialized Clock is [3, 1] 
-[2022-11-07 20:46:21] [FINE   ] Updating local clock with remote clock.	Remote clock is [3, 1]	Local clock is [1, 3] 
-[2022-11-07 20:46:21] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [3, 1]	Local clock is [1, 3] 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [3, 4] 
-[2022-11-07 20:46:21] [INFO   ] 2 [3, 4] R 1 [3, 1] 
-[2022-11-07 20:46:21] [FINEST ] Origin Clock status is [3, 1]  
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 4001
+[2022-11-07 21:05:02] [FINE   ] Received an EVENT package 
+[2022-11-07 21:05:02] [FINE   ] Decreased number of events.Current value is 7 
+[2022-11-07 21:05:02] [FINER  ] Deserialized Clock is [3, 1] 
+[2022-11-07 21:05:02] [FINE   ] Updating local clock with remote clock.	Remote clock is [3, 1]	Local clock is [0, 2] 
+[2022-11-07 21:05:02] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [3, 1]	Local clock is [0, 2] 
+[2022-11-07 21:05:02] [FINER  ] Updated Clock is [3, 3] 
+[2022-11-07 21:05:02] [INFO   ] 2 [3, 3] R 1 [3, 1] 
+[2022-11-07 21:05:02] [FINEST ] Origin Clock status is [3, 1]  
+[2022-11-07 21:05:02] [FINEST ] Sent a package. 
+Destiny port is 1234
 Package content is ACK 
-[2022-11-07 20:46:21] [FINE   ] Sent ACK to  /192.168.80.1:4001 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 10 
-[2022-11-07 20:46:21] [FINEST ] Chance value calculated. Chance value is 0.194606 
-[2022-11-07 20:46:21] [FINEST ] Remote Event triggered. 
-[2022-11-07 20:46:21] [FINEST ] Remote port is 4001
+[2022-11-07 21:05:02] [FINE   ] Sent ACK to  /192.168.80.1:1234 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 6 
+[2022-11-07 21:05:03] [FINEST ] Chance value calculated. Chance value is 0.642259 
+[2022-11-07 21:05:03] [FINEST ] Local Event triggered. 
+[2022-11-07 21:05:03] [FINER  ] Local event triggered 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [3, 4] 
+[2022-11-07 21:05:03] [FINEST ] New clock status is [3, 4]  
+[2022-11-07 21:05:03] [INFO   ] 2 [3, 4] L 
+[2022-11-07 21:05:03] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:03] [FINER  ] Thread sleeping for 284 seconds 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
+Origin port is 1234
+Package content is EVENT - 1 - 4,1 
+[2022-11-07 21:05:03] [FINE   ] Received an EVENT package 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 5 
+[2022-11-07 21:05:03] [FINER  ] Deserialized Clock is [4, 1] 
+[2022-11-07 21:05:03] [FINE   ] Updating local clock with remote clock.	Remote clock is [4, 1]	Local clock is [3, 4] 
+[2022-11-07 21:05:03] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [4, 1]	Local clock is [3, 4] 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [4, 5] 
+[2022-11-07 21:05:03] [INFO   ] 2 [4, 5] R 1 [4, 1] 
+[2022-11-07 21:05:03] [FINEST ] Origin Clock status is [4, 1]  
+[2022-11-07 21:05:03] [FINEST ] Sent a package. 
+Destiny port is 1234
+Package content is ACK 
+[2022-11-07 21:05:03] [FINE   ] Sent ACK to  /192.168.80.1:1234 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 4 
+[2022-11-07 21:05:03] [FINEST ] Chance value calculated. Chance value is 0.633550 
+[2022-11-07 21:05:03] [FINEST ] Local Event triggered. 
+[2022-11-07 21:05:03] [FINER  ] Local event triggered 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [4, 6] 
+[2022-11-07 21:05:03] [FINEST ] New clock status is [4, 6]  
+[2022-11-07 21:05:03] [INFO   ] 2 [4, 6] L 
+[2022-11-07 21:05:03] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:03] [FINER  ] Thread sleeping for 201 seconds 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
+Origin port is 1234
+Package content is EVENT - 1 - 5,1 
+[2022-11-07 21:05:03] [FINE   ] Received an EVENT package 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 3 
+[2022-11-07 21:05:03] [FINER  ] Deserialized Clock is [5, 1] 
+[2022-11-07 21:05:03] [FINE   ] Updating local clock with remote clock.	Remote clock is [5, 1]	Local clock is [4, 6] 
+[2022-11-07 21:05:03] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [5, 1]	Local clock is [4, 6] 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [5, 7] 
+[2022-11-07 21:05:03] [INFO   ] 2 [5, 7] R 1 [5, 1] 
+[2022-11-07 21:05:03] [FINEST ] Origin Clock status is [5, 1]  
+[2022-11-07 21:05:03] [FINEST ] Sent a package. 
+Destiny port is 1234
+Package content is ACK 
+[2022-11-07 21:05:03] [FINE   ] Sent ACK to  /192.168.80.1:1234 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 2 
+[2022-11-07 21:05:03] [FINEST ] Chance value calculated. Chance value is 0.749793 
+[2022-11-07 21:05:03] [FINEST ] Local Event triggered. 
+[2022-11-07 21:05:03] [FINER  ] Local event triggered 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [5, 8] 
+[2022-11-07 21:05:03] [FINEST ] New clock status is [5, 8]  
+[2022-11-07 21:05:03] [INFO   ] 2 [5, 8] L 
+[2022-11-07 21:05:03] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:03] [FINER  ] Thread sleeping for 229 seconds 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
+Origin port is 1234
+Package content is EVENT - 1 - 6,1 
+[2022-11-07 21:05:03] [FINE   ] Received an EVENT package 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 1 
+[2022-11-07 21:05:03] [FINER  ] Deserialized Clock is [6, 1] 
+[2022-11-07 21:05:03] [FINE   ] Updating local clock with remote clock.	Remote clock is [6, 1]	Local clock is [5, 8] 
+[2022-11-07 21:05:03] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [6, 1]	Local clock is [5, 8] 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [6, 9] 
+[2022-11-07 21:05:03] [INFO   ] 2 [6, 9] R 1 [6, 1] 
+[2022-11-07 21:05:03] [FINEST ] Origin Clock status is [6, 1]  
+[2022-11-07 21:05:03] [FINEST ] Sent a package. 
+Destiny port is 1234
+Package content is ACK 
+[2022-11-07 21:05:03] [FINE   ] Sent ACK to  /192.168.80.1:1234 
+[2022-11-07 21:05:03] [FINE   ] Decreased number of events.Current value is 0 
+[2022-11-07 21:05:03] [FINEST ] Chance value calculated. Chance value is 0.169205 
+[2022-11-07 21:05:03] [FINEST ] Remote Event triggered. 
+[2022-11-07 21:05:03] [FINEST ] Remote port is 1234
 Remote ID is 1 
-[2022-11-07 20:46:21] [FINER  ] Remote event triggered 
-[2022-11-07 20:46:21] [FINER  ] Triggering Local event... 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [3, 5] 
-[2022-11-07 20:46:21] [FINER  ] Serialized Clock is 3,5 
-[2022-11-07 20:46:21] [FINEST ] Sending remote package.	Content is EVENT - 2 - 3,5	Address is 192.168.80.1	Port is 4001.	Id is 1 
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 4001
-Package content is EVENT - 2 - 3,5 
-[2022-11-07 20:46:21] [FINEST ] New clock status is [3, 5]  
-[2022-11-07 20:46:21] [INFO   ] 2 [3, 5] S 1 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
-Origin port is 4001
-Package content is ACK 
-[2022-11-07 20:46:21] [FINE   ] Received an ACK package from /192.168.80.1:4001 
-[2022-11-07 20:46:21] [FINEST ] Moving ACK to internal socket.	Internal Port is 1235 
-[2022-11-07 20:46:21] [FINEST ] Sent a package. 
-Destiny port is 1235
-Package content is ACK 
-[2022-11-07 20:46:21] [FINEST ] Received a package. 
+[2022-11-07 21:05:03] [FINER  ] Remote event triggered 
+[2022-11-07 21:05:03] [FINER  ] Triggering Local event... 
+[2022-11-07 21:05:03] [FINER  ] Updated Clock is [6, 10] 
+[2022-11-07 21:05:03] [FINER  ] Serialized Clock is 6,10 
+[2022-11-07 21:05:03] [FINEST ] Sending remote package.	Content is EVENT - 2 - 6,10	Address is 192.168.80.1	Port is 1234.	Id is 1 
+[2022-11-07 21:05:03] [FINEST ] Sent a package. 
+Destiny port is 1234
+Package content is EVENT - 2 - 6,10 
+[2022-11-07 21:05:03] [FINEST ] New clock status is [6, 10]  
+[2022-11-07 21:05:03] [INFO   ] 2 [6, 10] S 1 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
 Origin port is 1234
 Package content is ACK 
-[2022-11-07 20:46:21] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:21] [FINER  ] Thread sleeping for 235 seconds 
-[2022-11-07 20:46:21] [FINE   ] Decreased number of events.Current value is 9 
-[2022-11-07 20:46:21] [FINEST ] Chance value calculated. Chance value is 0.874263 
-[2022-11-07 20:46:21] [FINEST ] Local Event triggered. 
-[2022-11-07 20:46:21] [FINER  ] Local event triggered 
-[2022-11-07 20:46:21] [FINER  ] Updated Clock is [3, 6] 
-[2022-11-07 20:46:21] [FINEST ] New clock status is [3, 6]  
-[2022-11-07 20:46:21] [INFO   ] 2 [3, 6] L 
-[2022-11-07 20:46:21] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:21] [FINER  ] Thread sleeping for 333 seconds 
-[2022-11-07 20:46:22] [FINE   ] Decreased number of events.Current value is 8 
-[2022-11-07 20:46:22] [FINEST ] Chance value calculated. Chance value is 0.964848 
-[2022-11-07 20:46:22] [FINEST ] Local Event triggered. 
-[2022-11-07 20:46:22] [FINER  ] Local event triggered 
-[2022-11-07 20:46:22] [FINER  ] Updated Clock is [3, 7] 
-[2022-11-07 20:46:22] [FINEST ] New clock status is [3, 7]  
-[2022-11-07 20:46:22] [INFO   ] 2 [3, 7] L 
-[2022-11-07 20:46:22] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:22] [FINER  ] Thread sleeping for 325 seconds 
-[2022-11-07 20:46:22] [FINEST ] Received a package. 
-Origin port is 4001
-Package content is EVENT - 1 - 8,5 
-[2022-11-07 20:46:22] [FINE   ] Received an EVENT package 
-[2022-11-07 20:46:22] [FINE   ] Decreased number of events.Current value is 7 
-[2022-11-07 20:46:22] [FINER  ] Deserialized Clock is [8, 5] 
-[2022-11-07 20:46:22] [FINE   ] Updating local clock with remote clock.	Remote clock is [8, 5]	Local clock is [3, 7] 
-[2022-11-07 20:46:22] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [8, 5]	Local clock is [3, 7] 
-[2022-11-07 20:46:22] [FINER  ] Updated Clock is [8, 8] 
-[2022-11-07 20:46:22] [INFO   ] 2 [8, 8] R 1 [8, 5] 
-[2022-11-07 20:46:22] [FINEST ] Origin Clock status is [8, 5]  
-[2022-11-07 20:46:22] [FINEST ] Sent a package. 
-Destiny port is 4001
+[2022-11-07 21:05:03] [FINE   ] Received an ACK package from /192.168.80.1:1234 
+[2022-11-07 21:05:03] [FINEST ] Moving ACK to internal socket.	Internal Port is 4002 
+[2022-11-07 21:05:03] [FINEST ] Sent a package. 
+Destiny port is 4002
 Package content is ACK 
-[2022-11-07 20:46:22] [FINE   ] Sent ACK to  /192.168.80.1:4001 
-[2022-11-07 20:46:22] [FINE   ] Decreased number of events.Current value is 6 
-[2022-11-07 20:46:22] [FINEST ] Chance value calculated. Chance value is 0.486031 
-[2022-11-07 20:46:22] [FINEST ] Remote Event triggered. 
-[2022-11-07 20:46:22] [FINEST ] Remote port is 4001
-Remote ID is 1 
-[2022-11-07 20:46:22] [FINER  ] Remote event triggered 
-[2022-11-07 20:46:22] [FINER  ] Triggering Local event... 
-[2022-11-07 20:46:22] [FINER  ] Updated Clock is [8, 9] 
-[2022-11-07 20:46:22] [FINER  ] Serialized Clock is 8,9 
-[2022-11-07 20:46:22] [FINEST ] Sending remote package.	Content is EVENT - 2 - 8,9	Address is 192.168.80.1	Port is 4001.	Id is 1 
-[2022-11-07 20:46:22] [FINEST ] Sent a package. 
-Destiny port is 4001
-Package content is EVENT - 2 - 8,9 
-[2022-11-07 20:46:22] [FINEST ] New clock status is [8, 9]  
-[2022-11-07 20:46:22] [INFO   ] 2 [8, 9] S 1 
-[2022-11-07 20:46:22] [FINEST ] Received a package. 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
 Origin port is 4001
 Package content is ACK 
-[2022-11-07 20:46:22] [FINE   ] Received an ACK package from /192.168.80.1:4001 
-[2022-11-07 20:46:22] [FINEST ] Moving ACK to internal socket.	Internal Port is 1235 
-[2022-11-07 20:46:22] [FINEST ] Sent a package. 
-Destiny port is 1235
-Package content is ACK 
-[2022-11-07 20:46:22] [FINEST ] Received a package. 
+[2022-11-07 21:05:03] [FINER  ] Min delay is 200. Max delay is 350. 
+[2022-11-07 21:05:03] [FINER  ] Thread sleeping for 201 seconds 
+[2022-11-07 21:05:03] [FINEST ] Received a package. 
 Origin port is 1234
-Package content is ACK 
-[2022-11-07 20:46:22] [FINER  ] Min delay is 200. Max delay is 350. 
-[2022-11-07 20:46:22] [FINER  ] Thread sleeping for 272 seconds 
-[2022-11-07 20:46:22] [FINEST ] Received a package. 
-Origin port is 4001
-Package content is EVENT - 1 - 10,9 
-[2022-11-07 20:46:22] [FINE   ] Received an EVENT package 
-[2022-11-07 20:46:22] [FINE   ] Decreased number of events.Current value is 5 
-[2022-11-07 20:46:22] [FINER  ] Deserialized Clock is [10, 9] 
-[2022-11-07 20:46:22] [FINE   ] Updating local clock with remote clock.	Remote clock is [10, 9]	Local clock is [8, 9] 
-[2022-11-07 20:46:22] [FINER  ] Comparing Clock to remote Clock.	Remote clock is [10, 9]	Local clock is [8, 9] 
-[2022-11-07 20:46:22] [FINER  ] Updated Clock is [10, 10] 
-[2022-11-07 20:46:22] [INFO   ] 2 [10, 10] R 1 [10, 9] 
-[2022-11-07 20:46:22] [FINEST ] Origin Clock status is [10, 9]  
-[2022-11-07 20:46:22] [FINEST ] Sent a package. 
-Destiny port is 4001
-Package content is ACK 
-[2022-11-07 20:46:22] [FINE   ] Sent ACK to  /192.168.80.1:4001 
-[2022-11-07 20:46:22] [FINE   ] Decreased number of events.Current value is 4 
-[2022-11-07 20:46:22] [FINEST ] Chance value calculated. Chance value is 0.213621 
-[2022-11-07 20:46:22] [FINEST ] Remote Event triggered. 
-[2022-11-07 20:46:22] [FINEST ] Remote port is 4001
-Remote ID is 1 
-[2022-11-07 20:46:22] [FINER  ] Remote event triggered 
-[2022-11-07 20:46:22] [FINER  ] Triggering Local event... 
-[2022-11-07 20:46:22] [FINER  ] Updated Clock is [10, 11] 
-[2022-11-07 20:46:22] [FINER  ] Serialized Clock is 10,11 
-[2022-11-07 20:46:22] [FINEST ] Sending remote package.	Content is EVENT - 2 - 10,11	Address is 192.168.80.1	Port is 4001.	Id is 1 
-[2022-11-07 20:46:22] [FINEST ] Sent a package. 
-Destiny port is 4001
-Package content is EVENT - 2 - 10,11 
-[2022-11-07 20:46:22] [FINEST ] New clock status is [10, 11]  
-[2022-11-07 20:46:22] [INFO   ] 2 [10, 11] S 1 
-.[2022-11-07 20:46:23] [WARNING] Remote operation timed-out. 
-[2022-11-07 20:46:23] [INFO   ] Time-out event. 
-[2022-11-07 20:46:23] [INFO   ] Final clock status is [10, 11] 
-[2022-11-07 20:46:23] [INFO   ] Ending process... 
+Package content is EVENT - 1 - 8,10 
+[2022-11-07 21:05:03] [FINE   ] Received an EVENT package 
+[2022-11-07 21:05:03] [FINE   ] Number of events is 0 
+[2022-11-07 21:05:03] [INFO   ] Number of Events is 0. 
+[2022-11-07 21:05:03] [INFO   ] Final clock status is [6, 10] 
+[2022-11-07 21:05:03] [INFO   ] Ending process... 
