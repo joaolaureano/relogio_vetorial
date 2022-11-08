@@ -39,6 +39,11 @@ public class ServerListener extends Thread {
     EventManager eventManager;
 
     /**
+     * Current IP Addresss
+     */
+    String address;
+
+    /**
      * Main builder for ServerListener.
      * It is used by {@link ServerListenerBuilder } builder only
      * 
@@ -47,6 +52,7 @@ public class ServerListener extends Thread {
     ServerListener(ServerListenerBuilder builder) {
         this.unicastSocket = builder.unicastSocket;
         this.eventManager = builder.eventManager;
+        this.address = builder.address;
     }
 
     /**
@@ -75,7 +81,7 @@ public class ServerListener extends Thread {
 
                 // logger.log(Level.OFF,
                 // String.format(
-                // "Received an package.\nContent is %s\nPort is %d",
+                // "Received an package.\tContent is %s\tPort is %d",
                 // socketPayload.getContent(),
                 // port));
 
@@ -105,7 +111,7 @@ public class ServerListener extends Thread {
                     logger.log(Level.FINEST, String.format("Moving ACK to internal socket.\tInternal Port is %d",
                             this.unicastSocket.getLocalPort() + 1));
                     String ackMessage = "ACK";
-                    unicastSocket.sendPacket(ackMessage, address, this.unicastSocket.getLocalPort() + 1);
+                    unicastSocket.sendPacket(ackMessage, InetAddress.getByName(this.address) , this.unicastSocket.getLocalPort() + 1);
                 }
 
             } catch (Exception e) {
@@ -131,18 +137,26 @@ public class ServerListener extends Thread {
 
         USocket unicastSocket;
         EventManager eventManager;
+        String address;
 
         public ServerListenerBuilder setUnicastSocket(USocket unicastSocket) {
             this.unicastSocket = unicastSocket;
-            logger.log(Level.CONFIG, String.format("Unicast Socket added to build ServerListener.\nPort is %d ",
+            logger.log(Level.CONFIG, String.format("Unicast Socket added to build ServerListener.\tPort is %d ",
                     unicastSocket.getLocalPort()));
             return this;
         }
 
         public ServerListenerBuilder setEventManager(EventManager eventManager) {
             this.eventManager = eventManager;
-            logger.log(Level.CONFIG, String.format("Event Manager added to build ServerListener.\nClock status is %s.",
+            logger.log(Level.CONFIG, String.format("Event Manager added to build ServerListener.\tClock status is %s.",
                     eventManager.toString()));
+            return this;
+        }
+
+        public ServerListenerBuilder setAddress(String address) {
+            this.address = address;
+            logger.log(Level.CONFIG, String.format("Address added to build ServerListener.\tAddress is %s.",
+                    address));
             return this;
         }
 
