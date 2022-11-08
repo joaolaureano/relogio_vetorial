@@ -142,6 +142,7 @@ public class Server {
         ServerListener listener = (new ServerListenerBuilder()
                 .setEventManager(eventManager)
                 .setUnicastSocket(socket)
+                .setAddress(address)
                 .build());
 
         ServerSender sender = (new ServerSenderBuilder()
