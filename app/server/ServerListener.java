@@ -80,13 +80,6 @@ public class ServerListener extends Thread {
 
                 if (vars.startsWith("EVENT")) {
                     logger.log(Level.FINE, "Received an EVENT package");
-                    boolean isEventAvailable = this.eventManager.decreaseEvent();
-                    if (!isEventAvailable) {
-                        logger.log(Level.INFO, String.format("Number of Events is 0."));
-                        logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
-                        logger.log(Level.INFO, String.format("Ending process..."));
-                        System.exit(0);
-                    }
                     int idSender = Integer.parseInt(vars.split("\\s-\\s")[1]);
                     int[] clock = ClockManager.deserialize(vars.split("\\s-\\s")[2]);
 
@@ -97,6 +90,14 @@ public class ServerListener extends Thread {
                     String ackMessage = "ACK";
                     unicastSocket.sendPacket(ackMessage, InetAddress.getByName("localhost"), port);
                     logger.log(Level.FINE, String.format("Sent ACK to port %d", port));
+
+                    boolean isEventAvailable = this.eventManager.decreaseEvent();
+                    if (!isEventAvailable) {
+                        logger.log(Level.INFO, String.format("Number of Events is 0."));
+                        logger.log(Level.INFO, String.format("Final clock status is %s", this.eventManager.toString()));
+                        logger.log(Level.INFO, String.format("Ending process..."));
+                        System.exit(0);
+                    }
 
                 } else if (vars.startsWith("ACK")) {
                     logger.log(Level.FINE, String.format("Received an ACK package from %d", port));

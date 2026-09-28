@@ -1,0 +1,9 @@
+# Compiled Java bytecode
+*.class
+
+# Javadoc output
+outputdir/
+
+# Logs
+logs/*.txt
+*.log

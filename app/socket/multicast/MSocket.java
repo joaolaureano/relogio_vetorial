@@ -153,11 +153,12 @@ public class MSocket {
 
     public void close() {
         try {
-            this.datagramSocket.close();
             datagramSocket.leaveGroup(InetAddress.getByName(multicastAddress));
         } catch (IOException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
+        } finally {
+            this.datagramSocket.close();
         }
 
     }
