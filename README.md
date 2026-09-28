@@ -39,7 +39,7 @@ app/
     multicast/MSocket.java  # Wrapper de MulticastSocket
     unicast/USocket.java    # Wrapper de DatagramSocket
 scenarios/                # Arquivos de configuração de cenários de teste
-setup.py                  # Script auxiliar para abrir um terminal por servidor
+setup.sh                  # Script auxiliar para abrir um terminal por servidor
 Makefile                  # Compilação das classes principais
 ```
 
@@ -58,10 +58,10 @@ Requer JDK (testado com Java 21) instalado.
 find app -name "*.java" | xargs javac
 
 # Iniciar os processos descritos em um cenário (usa gnome-terminal)
-python3 setup.py scenarios/scenario_01.txt
+./setup.sh scenarios/scenario_01.txt
 ```
 
-O `setup.py` abre um terminal por linha do cenário executando `ServerSetup`, aguarda alguns segundos e então dispara o `ServerManager`, que envia o pacote multicast que destrava todos os servidores simultaneamente.
+O `setup.sh` abre um terminal por linha do cenário executando `ServerSetup`, aguarda alguns segundos e então dispara o `ServerManager`, que envia o pacote multicast que destrava todos os servidores simultaneamente.
 
 ## Versões deste repositório
 

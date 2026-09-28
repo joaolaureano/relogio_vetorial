@@ -39,7 +39,7 @@ app/
     multicast/MSocket.java  # MulticastSocket wrapper
     unicast/USocket.java    # DatagramSocket wrapper
 scenarios/                # Test scenario configuration files
-setup.py                  # Helper script to spawn one terminal per server
+setup.sh                  # Helper script to spawn one terminal per server
 Makefile                  # Build for the main classes
 ```
 
@@ -58,10 +58,10 @@ Requires a JDK (tested with Java 21).
 find app -name "*.java" | xargs javac
 
 # Start the processes described in a scenario (uses gnome-terminal)
-python3 setup.py scenarios/scenario_01.txt
+./setup.sh scenarios/scenario_01.txt
 ```
 
-`setup.py` opens one terminal per scenario line running `ServerSetup`, waits a few seconds, then triggers `ServerManager`, which sends the multicast packet that unlocks all servers simultaneously.
+`setup.sh` opens one terminal per scenario line running `ServerSetup`, waits a few seconds, then triggers `ServerManager`, which sends the multicast packet that unlocks all servers simultaneously.
 
 ## Versions in this repository
 
