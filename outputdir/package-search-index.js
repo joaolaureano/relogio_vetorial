@@ -1,1 +1,0 @@
-packageSearchIndex = [{"l":"All Packages","url":"allpackages-index.html"},{"l":"app.server"},{"l":"app.server.clock"},{"l":"app.server.event"},{"l":"app.server.sleeper"},{"l":"app.socket.multicast"},{"l":"app.socket.unicast"}]
