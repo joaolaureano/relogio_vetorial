@@ -65,8 +65,8 @@ python3 setup.py scenarios/scenario_01.txt
 
 ## Versions in this repository
 
-- **[`original-v1.0`](../../tree/original-v1.0)** — snapshot of the project exactly as it was originally submitted/developed for the college course, with no fixes applied. Preserved as a branch for historical reference.
-- **Current version (this branch)** — starting from the original, a few concurrency/protocol bugs were identified and fixed (see below). Use this version for more correct protocol behavior; use the `original-v1.0` branch to see the code exactly as it was submitted.
+- **[`V1`](../../tree/V1)** — snapshot of the project exactly as it was originally submitted/developed for the college course, with no fixes applied. Preserved as a tag for historical reference.
+- **Current version (`main` branch)** — starting from the original, a few concurrency/protocol bugs were identified and fixed (see below). Use this version for more correct protocol behavior; use the `V1` tag to see the code exactly as it was submitted.
 
 ## Identified and fixed bugs
 

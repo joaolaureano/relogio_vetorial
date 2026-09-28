@@ -65,8 +65,8 @@ O `setup.py` abre um terminal por linha do cenário executando `ServerSetup`, ag
 
 ## Versões deste repositório
 
-- **[`original-v1.0`](../../tree/original-v1.0)** — snapshot do projeto exatamente como foi entregue/desenvolvido originalmente na faculdade, sem nenhuma correção. Preservado como branch para referência histórica.
-- **Versão atual (esta branch)** — a partir do original, foram identificados e corrigidos alguns bugs de concorrência/protocolo (ver seção abaixo). Use esta versão se quiser um comportamento mais correto do protocolo; use a branch `original-v1.0` se quiser ver o código exatamente como foi entregue.
+- **[`V1`](../../tree/V1)** — snapshot do projeto exatamente como foi entregue/desenvolvido originalmente na faculdade, sem nenhuma correção. Preservado como tag para referência histórica.
+- **Versão atual (branch `main`)** — a partir do original, foram identificados e corrigidos alguns bugs de concorrência/protocolo (ver seção abaixo). Use esta versão se quiser um comportamento mais correto do protocolo; use a tag `V1` se quiser ver o código exatamente como foi entregue.
 
 ## Bugs identificados e corrigidos
 
