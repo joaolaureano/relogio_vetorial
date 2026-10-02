@@ -1,6 +1,6 @@
 # Relógio Vetorial
 
-**[Read this in English / Leia em inglês](README.en.md)**
+**[Read this in English / Leia em inglês](README.md)**
 
 ## Sobre o projeto
 

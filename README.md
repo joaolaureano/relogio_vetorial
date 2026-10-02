@@ -1,6 +1,6 @@
 # Vector Clock (Relógio Vetorial)
 
-**[Leia em português / Read this in Portuguese](README.md)**
+**[Leia em português / Read this in Portuguese](README.pt-BR.md)**
 
 ## About the project
 
