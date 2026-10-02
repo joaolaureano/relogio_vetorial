@@ -1,98 +1,98 @@
-# Relógio Vetorial
+# Vector Clock (Relógio Vetorial)
 
-**[Read this in English / Leia em inglês](README.en.md)**
+**[Leia em português / Read this in Portuguese](README.md)**
 
-## Sobre o projeto
+## About the project
 
-Este projeto implementa um **relógio vetorial (vector clock)** distribuído em Java, usado para determinar a ordem causal de eventos em um sistema distribuído sem depender de um relógio global sincronizado.
+This project implements a distributed **vector clock** in Java, used to determine the causal ordering of events in a distributed system without relying on a synchronized global clock.
 
-Cada processo (servidor) roda em uma porta própria e se comunica com os demais via UDP:
+Each process (server) runs on its own port and communicates with the others over UDP:
 
-- Um **socket multicast** (`MSocket`) é usado para "destravar" (unlock) todos os servidores ao mesmo tempo, através do `ServerManager`.
-- Um **socket unicast** (`USocket`) é usado para trocar mensagens de evento (`EVENT`) e confirmação (`ACK`) entre processos vizinhos.
-- Cada servidor dispara, periodicamente, um evento **local** (incrementa apenas sua própria posição no vetor) ou um evento **remoto** (envia seu relógio para um vizinho, que mescla o vetor recebido com o seu — tomando o máximo componente a componente — e incrementa sua própria posição).
-- Cada processo tem um número máximo de eventos configurado; ao atingi-lo, o processo registra o estado final do relógio e encerra.
+- A **multicast socket** (`MSocket`) is used to "unlock" all servers at the same time, via `ServerManager`.
+- A **unicast socket** (`USocket`) is used to exchange `EVENT` and `ACK` messages between neighboring processes.
+- Each server periodically fires either a **local** event (increments only its own position in the vector) or a **remote** event (sends its clock to a neighbor, which merges the received vector with its own — taking the component-wise maximum — and increments its own position).
+- Each process has a configured maximum number of events; once reached, the process logs the final clock state and terminates.
 
-O objetivo é observar, através dos logs gerados, como o relógio vetorial captura corretamente as relações de causa e efeito ("happened-before") entre eventos distribuídos.
+The goal is to observe, through the generated logs, how the vector clock correctly captures the "happened-before" causal relationships between distributed events.
 
-## Contexto
+## Context
 
-Este é um **trabalho acadêmico**, desenvolvido como parte da disciplina de **Sistemas Distribuídos** na faculdade. O código foi escrito com foco em aprendizado dos conceitos de sincronização de relógios lógicos (relógios de Lamport / relógios vetoriais), comunicação via sockets (multicast/unicast) e concorrência (threads) em Java — não em uso em produção.
+This is an **academic assignment**, developed as part of a **Distributed Systems** college course. The code was written to learn the concepts of logical clock synchronization (Lamport clocks / vector clocks), socket-based communication (multicast/unicast), and concurrency (threads) in Java — it is not intended for production use.
 
-## Estrutura do projeto
+## Project structure
 
 ```
 app/
   server/
-    Server.java          # Processo principal: inicializa listener e sender
-    ServerListener.java  # Thread que escuta eventos/ACKs recebidos
-    ServerSender.java    # Thread que dispara eventos locais/remotos periodicamente
-    ServerManager.java   # Envia o pacote multicast "SETUP" para destravar os servidores
-    ServerSetup.java     # Lê um arquivo de cenário e inicializa um servidor com seus dados
+    Server.java          # Main process: initializes listener and sender
+    ServerListener.java  # Thread that listens for incoming events/ACKs
+    ServerSender.java    # Thread that periodically fires local/remote events
+    ServerManager.java   # Sends the multicast "SETUP" packet to unlock the servers
+    ServerSetup.java     # Reads a scenario file and initializes a server with its data
     clock/
-      ClockManager.java  # Implementação do relógio vetorial (singleton por processo)
+      ClockManager.java  # Vector clock implementation (singleton per process)
     event/
-      EventManager.java  # Orquestra eventos locais, remotos e recebidos
+      EventManager.java  # Orchestrates local, remote, and received events
     sleeper/
-      Sleeper.java        # Utilitário de delay aleatório entre eventos
+      Sleeper.java        # Random delay utility between events
   socket/
-    multicast/MSocket.java  # Wrapper de MulticastSocket
-    unicast/USocket.java    # Wrapper de DatagramSocket
-scenarios/                # Arquivos de configuração de cenários de teste
-setup.sh                  # Script auxiliar para abrir um terminal por servidor
-Makefile                  # Compilação das classes principais
+    multicast/MSocket.java  # MulticastSocket wrapper
+    unicast/USocket.java    # DatagramSocket wrapper
+scenarios/                # Test scenario configuration files
+setup.sh                  # Helper script to spawn one terminal per server
+Makefile                  # Build for the main classes
 ```
 
-Cada linha de um arquivo em `scenarios/` representa um servidor:
+Each line in a `scenarios/` file represents one server:
 
 ```
-<id> <host> <porta> <chance de evento remoto (%)> <nº de eventos> <delay mínimo> <delay máximo>
+<id> <host> <port> <remote event chance (%)> <number of events> <min delay> <max delay>
 ```
 
-## Como rodar
+## How to run
 
-Requer JDK (testado com Java 21) instalado.
+Requires a JDK (tested with Java 21).
 
 ```bash
-# Compilar todas as classes
+# Compile all classes
 find app -name "*.java" | xargs javac
 
-# Iniciar os processos descritos em um cenário (usa gnome-terminal)
+# Start the processes described in a scenario (uses gnome-terminal)
 ./setup.sh scenarios/scenario_01.txt
 ```
 
-O `setup.sh` abre um terminal por linha do cenário executando `ServerSetup`, aguarda alguns segundos e então dispara o `ServerManager`, que envia o pacote multicast que destrava todos os servidores simultaneamente.
+`setup.sh` opens one terminal per scenario line running `ServerSetup`, waits a few seconds, then triggers `ServerManager`, which sends the multicast packet that unlocks all servers simultaneously.
 
-## Versões deste repositório
+## Versions in this repository
 
-- **[`V1`](../../tree/V1)** — snapshot do projeto exatamente como foi entregue/desenvolvido originalmente na faculdade, sem nenhuma correção. Preservado como tag para referência histórica.
-- **Versão atual (branch `main`)** — a partir do original, foram identificados e corrigidos alguns bugs de concorrência/protocolo (ver seção abaixo). Use esta versão se quiser um comportamento mais correto do protocolo; use a tag `V1` se quiser ver o código exatamente como foi entregue.
+- **[`V1`](../../tree/V1)** — snapshot of the project exactly as it was originally submitted/developed for the college course, with no fixes applied. Preserved as a tag for historical reference.
+- **Current version (`main` branch)** — starting from the original, a few concurrency/protocol bugs were identified and fixed (see below). Use this version for more correct protocol behavior; use the `V1` tag to see the code exactly as it was submitted.
 
-## Bugs identificados e corrigidos
+## Identified and fixed bugs
 
-Durante a análise do código original foram encontrados os seguintes problemas:
+The following issues were found while reviewing the original code:
 
-### 1. Evento remoto recebido era descartado sem ACK quando o orçamento local de eventos acabava (crítico)
+### 1. Received remote event was dropped without an ACK once the local event budget ran out (critical)
 
-Em `ServerListener.run()`, ao receber um pacote `EVENT`, o código chamava `eventManager.decreaseEvent()` **antes** de processar o evento e **antes** de enviar o `ACK`. Se o contador de eventos do processo receptor já estivesse zerado, o processo encerrava (`System.exit(0)`) imediatamente:
+In `ServerListener.run()`, when an `EVENT` packet was received, the code called `eventManager.decreaseEvent()` **before** processing the event and **before** sending the `ACK`. If the receiving process's event counter had already reached zero, the process would immediately exit (`System.exit(0)`):
 
-- sem aplicar o merge do relógio vetorial recebido (quebrando a garantia de causalidade que o relógio vetorial deveria preservar);
-- sem responder com `ACK` ao processo remetente.
+- without applying the vector-clock merge for the received event (breaking the causality guarantee the vector clock is supposed to provide);
+- without replying with an `ACK` to the sending process.
 
-Isso fazia o remetente (`EventManager.remote`) travar até o timeout do socket, retornar falha por "time-out" e, por sua vez, encerrar o processo remetente de forma incorreta — um efeito cascata de encerramentos indevidos, mesmo quando não havia nenhuma falha real de rede.
+This made the sender (`EventManager.remote`) block until the socket timeout, report a false "time-out" failure, and in turn terminate the sending process incorrectly — a cascade of spurious shutdowns even though no real network failure had occurred.
 
-**Correção:** o evento recebido agora é sempre processado (merge do relógio) e confirmado (`ACK`) antes de verificar se o orçamento de eventos do processo local acabou. O processo só encerra depois de ter tratado corretamente o evento recebido.
+**Fix:** the received event is now always processed (clock merge) and acknowledged (`ACK`) before checking whether the local process's event budget has run out. The process only exits after correctly handling the received event.
 
-### 2. `MSocket.close()` fechava o socket antes de sair do grupo multicast
+### 2. `MSocket.close()` closed the socket before leaving the multicast group
 
-O método chamava `datagramSocket.close()` e, em seguida, `datagramSocket.leaveGroup(...)`. Como o socket já estava fechado, a chamada a `leaveGroup` lançava uma exceção (capturada e apenas logada), então o grupo multicast nunca era efetivamente abandonado de forma limpa.
+The method called `datagramSocket.close()` and only then `datagramSocket.leaveGroup(...)`. Since the socket was already closed, the `leaveGroup` call threw an exception (caught and just logged), so the multicast group was never actually left cleanly.
 
-**Correção:** a ordem foi invertida — primeiro sai do grupo multicast (`leaveGroup`), depois fecha o socket, usando um bloco `finally` para garantir o fechamento mesmo se `leaveGroup` falhar.
+**Fix:** the order was swapped — the socket now leaves the multicast group (`leaveGroup`) first, then closes, using a `finally` block to guarantee the socket is closed even if `leaveGroup` fails.
 
-### 3. Artefatos de build (`*.class`) e saída do Javadoc versionados
+### 3. Compiled build artifacts (`*.class`) and Javadoc output were committed
 
-O repositório original tinha arquivos `.class` compilados e a pasta `outputdir/` (Javadoc gerado) commitados, e que ficavam dessincronizados do código-fonte a cada alteração. Foi adicionado um `.gitignore` e os artefatos de build foram removidos do controle de versão — eles devem ser gerados localmente com `javac` / `javadoc` quando necessário.
+The original repository had compiled `.class` files and the generated Javadoc output (`outputdir/`) committed, which drifted out of sync with the source on every change. A `.gitignore` was added and the build artifacts were removed from version control — they should be generated locally with `javac` / `javadoc` when needed.
 
-## Aviso
+## Disclaimer
 
-Este é um projeto acadêmico/educacional. O protocolo assume comunicação em `localhost` e não foi desenhado para ambientes de produção (não há tratamento de segurança, perda de pacotes além do timeout simples, ou reconfiguração dinâmica de topologia).
+This is an academic/educational project. The protocol assumes communication over `localhost` and was not designed for production environments (no security handling, no packet-loss handling beyond a simple timeout, no dynamic topology reconfiguration).
